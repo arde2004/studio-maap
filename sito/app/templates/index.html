@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Studio Tecnico MAAP</title>
+  <meta
+    name="description"
+    content="Studio Tecnico MAAP: progettazione, pratiche edilizie e catastali, direzione lavori, consulenza tecnica e gestione cantieri."
+  />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+  <div class="grid-overlay"></div>
+  <div class="orb a"></div>
+  <div class="orb b"></div>
+  <div class="orb c"></div>
+
+  <header>
+    <div class="container nav">
+      <a href="{{ url_for('main.home') }}" class="logo">
+        <div class="logo-box">MA</div>
+        <div>
+          STUDIO TECNICO MAAP
+          <small>PROGETTAZIONE • CANTIERI • PRATICHE • CONSULENZA</small>
+        </div>
+      </a>
+
+      <nav>
+        <ul>
+          <li><a href="{{ url_for('main.home') }}">Home</a></li>
+          <li><a href="#servizi">Servizi</a></li>
+          <li><a href="{{ url_for('main.cantieri') }}">Cantieri</a></li>
+          <li><a href="{{ url_for('main.preventivi') }}">Preventivi</a></li>
+          <li><a href="{{ url_for('main.tecnici') }}">Tecnici</a></li>
+          <li><a href="#contatti">Contatti</a></li>
+        </ul>
+      </nav>
+
+      <a href="{{ url_for('main.login') }}" class="btn btn-primary">Accedi</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="hero" id="home">
+      <div class="container hero-wrap">
+        <div>
+          <div class="eyebrow">
+            Studio tecnico • gestione completa • pratiche • cantieri • consulenza
+          </div>
+
+          <h1>
+            Progettiamo, organizziamo e seguiamo <span class="shine">ogni fase del tuo intervento</span>.
+          </h1>
+
+          <p class="lead">
+            Studio Tecnico MAAP supporta privati, imprese e professionisti con un servizio tecnico completo:
+            progettazione, pratiche edilizie e catastali, direzione lavori, consulenza specialistica,
+            documentazione e coordinamento operativo. Un modo di lavorare chiaro, ordinato e costruito
+            per dare risultati concreti.
+          </p>
+
+          <div class="hero-actions">
+            <a href="{{ url_for('main.preventivi') }}" class="btn btn-primary">Richiedi un preventivo</a>
+            <a href="{{ url_for('main.cantieri') }}" class="btn btn-secondary">Scopri i nostri cantieri</a>
+          </div>
+
+          <div class="hero-highlights">
+            <div class="hero-stat">
+              <strong>+120</strong>
+              <span>Lavori, pratiche e consulenze seguiti con organizzazione tecnica e attenzione ai dettagli.</span>
+            </div>
+
+            <div class="hero-stat">
+              <strong>+15 anni</strong>
+              <span>Esperienza complessiva maturata tra progettazione, documentazione e gestione operativa.</span>
+            </div>
+
+            <div class="hero-stat">
+              <strong>Approccio completo</strong>
+              <span>Un unico riferimento tecnico, dal primo sopralluogo fino alla conclusione dell’intervento.</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="glass-panel">
+          <div class="dashboard">
+            <div class="card">
+              <h3>Cosa facciamo</h3>
+              <div class="pill-row">
+                <span class="pill">Progettazione</span>
+                <span class="pill">Pratiche edilizie</span>
+                <span class="pill">Catasto</span>
+                <span class="pill">Direzione lavori</span>
+                <span class="pill">Accessi agli atti</span>
+                <span class="pill">Consulenza tecnica</span>
+              </div>
+            </div>
+
+            <div class="card">
+              <h3>Metodo operativo</h3>
+              <div class="progress-list">
+                <div class="progress-item">
+                  <span><b>Analisi tecnica</b> <b>92%</b></span>
+                  <div class="bar"><i style="width: 92%"></i></div>
+                </div>
+
+                <div class="progress-item">
+                  <span><b>Gestione documentale</b> <b>87%</b></span>
+                  <div class="bar"><i style="width: 87%"></i></div>
+                </div>
+
+                <div class="progress-item">
+                  <span><b>Controllo cantiere</b> <b>95%</b></span>
+                  <div class="bar"><i style="width: 95%"></i></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="card">
+              <h3>Perché scegliere MAAP</h3>
+              <p class="card-text">
+                Perché uniamo visione tecnica, gestione ordinata delle pratiche, controllo operativo
+                e comunicazione chiara con il cliente in tutte le fasi del lavoro.
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="servizi">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Servizi tecnici strutturati per dare ordine, sicurezza e risultati</h2>
+          </div>
+          <p>
+            Ogni intervento viene seguito con metodo: analisi iniziale, valutazione tecnica,
+            gestione documentale, coordinamento operativo e supporto continuo fino alla chiusura.
+          </p>
+        </div>
+
+        <div class="cards-4">
+          <article class="feature-card reveal">
+            <div class="icon-box">🏗️</div>
+            <h3>Progettazione</h3>
+            <p>
+              Soluzioni progettuali studiate per migliorare spazi, funzionalità,
+              distribuzione interna e qualità complessiva dell’intervento.
+            </p>
+          </article>
+
+          <article class="feature-card reveal">
+            <div class="icon-box">📐</div>
+            <h3>Pratiche edilizie</h3>
+            <p>
+              Gestione di CILA, SCIA, sanatorie, verifiche urbanistiche e rapporti con gli enti competenti.
+            </p>
+          </article>
+
+          <article class="feature-card reveal">
+            <div class="icon-box">🗂️</div>
+            <h3>Catasto e documentazione</h3>
+            <p>
+              DOCFA, volture, visure, aggiornamenti catastali, accessi agli atti e ricostruzione tecnico-amministrativa.
+            </p>
+          </article>
+
+          <article class="feature-card reveal">
+            <div class="icon-box">🧭</div>
+            <h3>Direzione lavori</h3>
+            <p>
+              Coordinamento delle fasi operative, controllo avanzamento, verifica tecnica e presenza sul campo.
+            </p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="cantieri">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Cantieri e interventi raccontati con chiarezza</h2>
+          </div>
+          <p>
+            Una selezione dei lavori seguiti dallo studio, con immagini, descrizioni tecniche
+            e risultati ottenuti. Un modo concreto per mostrare esperienza e qualità operativa.
+          </p>
+        </div>
+
+        <div class="split">
+          <article class="project-card reveal">
+            <div class="project-art"></div>
+            <div class="project-content">
+              <div class="tag">PRIMA DELL’INTERVENTO</div>
+              <h3>Analisi dello stato di fatto</h3>
+              <p>
+                Verifica del contesto, criticità iniziali, obiettivi tecnici e impostazione corretta del lavoro.
+              </p>
+            </div>
+          </article>
+
+          <article class="project-card reveal">
+            <div class="project-art"></div>
+            <div class="project-content">
+              <div class="tag">DOPO L’INTERVENTO</div>
+              <h3>Risultato finale e valore ottenuto</h3>
+              <p>
+                Miglioramento degli spazi, ordine documentale, qualità esecutiva e risultato concreto dell’intervento.
+              </p>
+            </div>
+          </article>
+        </div>
+
+        <div style="margin-top: 22px;">
+          <a href="{{ url_for('main.cantieri') }}" class="btn btn-secondary">Vai alla pagina cantieri</a>
+        </div>
+      </div>
+    </section>
+
+    <section id="login-tecnici">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Area tecnica interna e gestione digitale dello studio</h2>
+          </div>
+          <p>
+            Il sito non è solo vetrina: diventa anche uno strumento operativo,
+            con una parte riservata dedicata all’organizzazione interna.
+          </p>
+        </div>
+
+        <div class="split">
+          <div class="login-box reveal">
+            <h3>Accesso riservato</h3>
+            <p>
+              L’area interna permette ai tecnici di creare cantieri, caricare immagini,
+              controllare le richieste e aggiornare i contenuti in modo centralizzato.
+            </p>
+
+            <div class="fake-form">
+              <input class="fake-input" type="text" placeholder="Nome utente" />
+              <input class="fake-input" type="password" placeholder="Password" />
+              <a href="{{ url_for('main.login') }}" class="btn btn-primary">Accedi all’area tecnica</a>
+            </div>
+
+            <div class="mini-note">
+              Accesso reale disponibile tramite login collegato al backend.
+            </div>
+          </div>
+
+          <div class="timeline">
+            <div class="timeline-item reveal">
+              <div class="timeline-badge">1</div>
+              <div>
+                <h4>Gestione cantieri</h4>
+                <p>
+                  Creazione, modifica e pubblicazione dei lavori seguiti dallo studio.
+                </p>
+              </div>
+            </div>
+
+            <div class="timeline-item reveal">
+              <div class="timeline-badge">2</div>
+              <div>
+                <h4>Upload immagini</h4>
+                <p>
+                  Inserimento del prima, del dopo e degli avanzamenti direttamente dalla dashboard tecnica.
+                </p>
+              </div>
+            </div>
+
+            <div class="timeline-item reveal">
+              <div class="timeline-badge">3</div>
+              <div>
+                <h4>Richieste e contenuti</h4>
+                <p>
+                  Gestione ordinata delle richieste ricevute e dei contenuti pubblici del sito.
+                </p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="preventivi">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Richiesta preventivo chiara, rapida e professionale</h2>
+          </div>
+          <p>
+            Il cliente può inviare una richiesta dettagliata con dati, luogo dell’intervento,
+            descrizione del lavoro e documentazione utile per una valutazione tecnica precisa.
+          </p>
+        </div>
+
+        <div class="split">
+          <div class="login-box reveal">
+            <h3>Modulo richiesta lavori</h3>
+            <div class="fake-form">
+              <input class="fake-input" type="text" placeholder="Nome e cognome / Azienda" />
+              <input class="fake-input" type="text" placeholder="Telefono" />
+              <input class="fake-input" type="email" placeholder="Email" />
+              <input class="fake-input" type="text" placeholder="Luogo dell'intervento" />
+              <textarea class="fake-area" placeholder="Descrivi il lavoro richiesto..."></textarea>
+              <a href="{{ url_for('main.preventivi') }}" class="btn btn-primary">Vai al modulo preventivi</a>
+            </div>
+
+            <div class="mini-note">
+              La richiesta completa viene gestita nella pagina dedicata collegata al database interno.
+            </div>
+          </div>
+
+          <div class="cards-3 single-col">
+            <article class="feature-card reveal">
+              <div class="icon-box">📝</div>
+              <h3>Dati e descrizione</h3>
+              <p>
+                Informazioni complete per inquadrare correttamente il lavoro richiesto.
+              </p>
+            </article>
+
+            <article class="feature-card reveal">
+              <div class="icon-box">📍</div>
+              <h3>Luogo e contesto</h3>
+              <p>
+                Riferimenti utili per comprendere posizione, tipologia e caratteristiche dell’intervento.
+              </p>
+            </article>
+
+            <article class="feature-card reveal">
+              <div class="icon-box">📂</div>
+              <h3>Documenti tecnici</h3>
+              <p>
+                Planimetrie, visure, fotografie e allegati per una valutazione più accurata.
+              </p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="tecnici">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Un team tecnico affidabile, organizzato e competente</h2>
+          </div>
+          <p>
+            Lo studio si presenta attraverso figure professionali chiare, competenti e specializzate,
+            capaci di seguire ogni fase del lavoro con metodo.
+          </p>
+        </div>
+
+        <div class="cards-3">
+          <article class="team-card reveal">
+            <div class="icon-box">👷</div>
+            <h3>Tecnico 01</h3>
+            <p>
+              Supporto operativo, pratiche edilizie, gestione documentale e controllo delle attività tecniche.
+            </p>
+          </article>
+
+          <article class="team-card reveal">
+            <div class="icon-box">📏</div>
+            <h3>Tecnico 02</h3>
+            <p>
+              Rilievi, verifiche progettuali, lettura documentale e supporto alla pianificazione dell’intervento.
+            </p>
+          </article>
+
+          <article class="team-card reveal">
+            <div class="icon-box">🏢</div>
+            <h3>Tecnico 03</h3>
+            <p>
+              Consulenza tecnica, coordinamento operativo e assistenza nella gestione delle diverse fasi di lavoro.
+            </p>
+          </article>
+        </div>
+
+        <div style="margin-top: 22px;">
+          <a href="{{ url_for('main.tecnici') }}" class="btn btn-secondary">Scopri il team tecnico</a>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="cta reveal">
+          <div>
+            <h3>Uno studio tecnico che comunica metodo, qualità e affidabilità</h3>
+            <p>
+              La prima impressione conta: un sito chiaro, curato e professionale aiuta il cliente
+              a percepire subito competenza, ordine e valore.
+            </p>
+          </div>
+          <a href="#contatti" class="btn btn-primary">Vai ai contatti</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer id="contatti">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-box">
+          <h4>Studio Tecnico MAAP</h4>
+          <p>
+            Progettazione, pratiche edilizie e catastali, consulenza tecnica, gestione cantieri,
+            supporto documentale e soluzioni su misura per privati, imprese e professionisti.
+          </p>
+        </div>
+
+        <div class="footer-box">
+          <h4>Recapiti</h4>
+          <ul>
+            <li>Via Esempio 25, Milano</li>
+            <li>+39 02 1234 5678</li>
+            <li>info@studiomaap.it</li>
+            <li>studiomaap@pec.it</li>
+          </ul>
+        </div>
+
+        <div class="footer-box">
+          <h4>Orari studio</h4>
+          <ul>
+            <li>Lunedì - Venerdì: 09:00 - 18:30</li>
+            <li>Sabato: su appuntamento</li>
+            <li>Domenica: chiuso</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">
+        © 2026 Studio Tecnico MAAP • Sito ufficiale
+      </div>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

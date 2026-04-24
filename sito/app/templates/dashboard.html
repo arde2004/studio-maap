@@ -1,0 +1,304 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Dashboard Tecnici | Studio Tecnico MAAP</title>
+  <meta
+    name="description"
+    content="Dashboard tecnica dello Studio Tecnico MAAP per la gestione interna di cantieri, richieste e contenuti."
+  />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+  <div class="grid-overlay"></div>
+  <div class="orb a"></div>
+  <div class="orb b"></div>
+  <div class="orb c"></div>
+
+  <header>
+    <div class="container nav">
+      <a href="{{ url_for('main.dashboard') }}" class="logo">
+        <div class="logo-box">MA</div>
+        <div>
+          DASHBOARD TECNICI
+          <small>GESTIONE CANTIERI E CONTENUTI</small>
+        </div>
+      </a>
+
+      <nav>
+        <ul>
+          <li><a href="{{ url_for('main.home') }}">Sito</a></li>
+          <li><a href="{{ url_for('main.cantieri') }}">Cantieri</a></li>
+          <li><a href="{{ url_for('main.preventivi') }}">Preventivi</a></li>
+          <li><a href="{{ url_for('main.dashboard') }}">Dashboard</a></li>
+        </ul>
+      </nav>
+
+      <button class="btn logout-btn" type="button">Logout</button>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <div class="page-hero-box reveal visible">
+          <span class="page-badge">AREA TECNICA RISERVATA</span>
+          <h1>Controllo <span class="shine">cantieri, immagini e richieste</span></h1>
+          <p>
+            Da questa area riservata lo staff tecnico può creare e modificare i cantieri,
+            caricare immagini, controllare le richieste ricevute dal sito e preparare i contenuti pubblici.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="dashboard-grid">
+          <aside class="dashboard-menu reveal">
+            <button class="dash-btn active" data-tab="cantieri" type="button">Cantieri</button>
+            <button class="dash-btn" data-tab="upload" type="button">Carica Foto</button>
+            <button class="dash-btn" data-tab="richieste" type="button">Richieste</button>
+            <button class="dash-btn" data-tab="contenuti" type="button">Contenuti</button>
+          </aside>
+
+          <div class="dashboard-content">
+
+            <!-- TAB CANTIERI -->
+            <div class="tab active" id="cantieri">
+              <div class="section-head form-head">
+                <div>
+                  <h2>Gestione cantieri</h2>
+                </div>
+                <p>
+                  Crea nuovi lavori, modifica quelli esistenti e gestisci la visibilità pubblica del sito.
+                </p>
+              </div>
+
+              <div class="form-panel" style="margin-bottom: 24px;">
+                <form class="quote-form" id="projectForm" novalidate>
+                  <input type="hidden" id="project-id" name="project_id" />
+
+                  <div class="form-grid">
+                    <div class="form-group">
+                      <label for="project-titolo">Titolo cantiere</label>
+                      <input
+                        type="text"
+                        id="project-titolo"
+                        name="titolo"
+                        placeholder="Es. Ristrutturazione Milano"
+                        required
+                      />
+                    </div>
+
+                    <div class="form-group">
+                      <label for="project-categoria">Categoria</label>
+                      <select id="project-categoria" name="categoria">
+                        <option value="">Seleziona</option>
+                        <option value="ristrutturazione">Ristrutturazione</option>
+                        <option value="catasto">Catasto</option>
+                        <option value="direzione-lavori">Direzione lavori</option>
+                        <option value="pratiche">Pratiche edilizie</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="project-luogo">Luogo</label>
+                      <input
+                        type="text"
+                        id="project-luogo"
+                        name="luogo"
+                        placeholder="Es. Milano"
+                      />
+                    </div>
+
+                    <div class="form-group">
+                      <label for="project-descrizione">Descrizione breve</label>
+                      <input
+                        type="text"
+                        id="project-descrizione"
+                        name="descrizione_breve"
+                        placeholder="Descrizione sintetica del cantiere"
+                      />
+                    </div>
+                  </div>
+
+                  <div id="project-message" class="form-message" aria-live="polite"></div>
+
+                  <div class="form-actions">
+                    <button type="submit" class="btn btn-primary" id="project-submit-btn">
+                      Crea cantiere
+                    </button>
+
+                    <button
+                      type="button"
+                      class="btn btn-secondary"
+                      id="project-cancel-btn"
+                      style="display: none;"
+                    >
+                      Annulla modifica
+                    </button>
+                  </div>
+                </form>
+              </div>
+
+              <div class="section-head form-head">
+                <div>
+                  <h2>Elenco cantieri</h2>
+                </div>
+                <p>
+                  Qui compariranno tutti i cantieri salvati nel sistema, con i comandi di modifica e gestione.
+                </p>
+              </div>
+
+              <div id="lista-cantieri-dashboard" class="dashboard-cards">
+                <div class="dash-card">
+                  <h3>Caricamento cantieri...</h3>
+                  <p>Attendere il caricamento dell’elenco dei cantieri presenti.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- TAB UPLOAD FOTO -->
+            <div class="tab" id="upload">
+              <div class="section-head form-head">
+                <div>
+                  <h2>Carica foto cantiere</h2>
+                </div>
+                <p>
+                  Seleziona un cantiere esistente, imposta il tipo di immagine e carica il file dal tuo computer.
+                </p>
+              </div>
+
+              <div class="form-panel" style="margin-bottom: 24px;">
+                <form class="quote-form" id="uploadForm" enctype="multipart/form-data" novalidate>
+                  <div class="form-grid">
+                    <div class="form-group">
+                      <label for="upload-cantiere">Seleziona cantiere</label>
+                      <select id="upload-cantiere" name="project_id">
+                        <option value="">Seleziona</option>
+                      </select>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="upload-tipo">Tipo immagine</label>
+                      <select id="upload-tipo" name="tipo">
+                        <option value="">Seleziona</option>
+                        <option value="prima">Prima</option>
+                        <option value="dopo">Dopo</option>
+                        <option value="avanzamento">Avanzamento</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div class="form-group">
+                    <label for="upload-caption">Descrizione foto</label>
+                    <input
+                      type="text"
+                      id="upload-caption"
+                      name="caption"
+                      placeholder="Inserisci una descrizione breve"
+                    />
+                  </div>
+
+                  <div class="form-group">
+                    <label for="upload-file">Seleziona immagine</label>
+                    <input
+                      type="file"
+                      id="upload-file"
+                      name="file"
+                      accept=".png,.jpg,.jpeg,.webp"
+                    />
+                  </div>
+
+                  <div class="form-actions">
+                    <button class="btn btn-primary" type="submit">Carica immagine</button>
+                  </div>
+                </form>
+              </div>
+
+              <div class="section-head form-head">
+                <div>
+                  <h2>Archivio immagini</h2>
+                </div>
+                <p>
+                  Seleziona un cantiere e visualizza qui tutte le immagini già caricate, con possibilità di eliminarle.
+                </p>
+              </div>
+
+              <div id="lista-foto-cantiere" class="dashboard-cards">
+                <div class="dash-card">
+                  <h3>Nessun cantiere selezionato</h3>
+                  <p>Seleziona un cantiere dal menu sopra per vedere le immagini caricate.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- TAB RICHIESTE -->
+            <div class="tab" id="richieste">
+              <div class="section-head form-head">
+                <div>
+                  <h2>Richieste preventivo</h2>
+                </div>
+                <p>
+                  In questa sezione vengono raccolte e mostrate le richieste inviate dai clienti dal sito pubblico.
+                </p>
+              </div>
+
+              <div id="lista-richieste" class="dashboard-cards">
+                <div class="dash-card">
+                  <h3>Caricamento richieste...</h3>
+                  <p>Attendere il caricamento delle richieste dal backend.</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- TAB CONTENUTI -->
+            <div class="tab" id="contenuti">
+              <div class="section-head form-head">
+                <div>
+                  <h2>Gestione contenuti</h2>
+                </div>
+                <p>
+                  Area predisposta per aggiornare testi del sito, sezioni pubbliche e informazioni principali dello studio.
+                </p>
+              </div>
+
+              <div class="dashboard-cards">
+                <div class="dash-card">
+                  <h3>Homepage</h3>
+                  <p>
+                    Hero section, testi introduttivi, servizi principali e contenuti in evidenza del sito.
+                  </p>
+                  <button class="btn btn-primary small-btn" type="button">Modifica</button>
+                </div>
+
+                <div class="dash-card">
+                  <h3>Recapiti studio</h3>
+                  <p>
+                    Telefono, email, PEC, indirizzo, orari di apertura e riferimenti generali dello studio.
+                  </p>
+                  <button class="btn btn-primary small-btn" type="button">Modifica</button>
+                </div>
+
+                <div class="dash-card">
+                  <h3>Sezione tecnici</h3>
+                  <p>
+                    Profili pubblici del team, competenze, ruoli operativi e descrizioni professionali dei tecnici.
+                  </p>
+                  <button class="btn btn-primary small-btn" type="button">Modifica</button>
+                </div>
+              </div>
+            </div>
+            <!-- FINE TAB -->
+
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
