@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Login Tecnici | Studio Tecnico MAAP</title>
+  <meta
+    name="description"
+    content="Area riservata ai tecnici dello Studio Tecnico MAAP per la gestione interna del sito, dei cantieri e delle richieste."
+  />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+  <div class="grid-overlay"></div>
+  <div class="orb a"></div>
+  <div class="orb b"></div>
+  <div class="orb c"></div>
+
+  <header>
+    <div class="container nav">
+      <a href="{{ url_for('main.home') }}" class="logo">
+        <div class="logo-box">MA</div>
+        <div>
+          STUDIO TECNICO MAAP
+          <small>PROGETTAZIONE • CANTIERI • PRATICHE • CONSULENZA</small>
+        </div>
+      </a>
+
+      <nav>
+        <ul>
+          <li><a href="{{ url_for('main.home') }}">Home</a></li>
+          <li><a href="{{ url_for('main.cantieri') }}">Cantieri</a></li>
+          <li><a href="{{ url_for('main.preventivi') }}">Preventivi</a></li>
+          <li><a href="{{ url_for('main.tecnici') }}">Tecnici</a></li>
+          <li><a href="{{ url_for('main.login') }}">Accedi</a></li>
+        </ul>
+      </nav>
+
+      <a href="{{ url_for('main.login') }}" class="btn btn-primary">Area Tecnici</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <div class="page-hero-box reveal visible">
+          <span class="page-badge">ACCESSO RISERVATO • GESTIONE INTERNA • AREA TECNICA</span>
+          <h1>Accesso al <span class="shine">pannello tecnico</span></h1>
+          <p>
+            Area riservata al personale autorizzato dello studio per la gestione dei cantieri,
+            delle immagini, delle richieste preventivo e dei contenuti del sito.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="login-page-section">
+      <div class="container">
+        <div class="login-layout">
+          <div class="login-panel reveal">
+            <h2>Accedi</h2>
+            <p class="login-subtext">
+              Inserisci le credenziali per entrare nell’area tecnica riservata.
+            </p>
+
+            <form id="loginForm" class="quote-form" novalidate>
+              <div class="form-group">
+                <label for="login-user">Nome utente</label>
+                <input
+                  type="text"
+                  id="login-user"
+                  name="username"
+                  placeholder="Inserisci il nome utente"
+                  autocomplete="username"
+                  required
+                />
+              </div>
+
+              <div class="form-group">
+                <label for="login-pass">Password</label>
+                <input
+                  type="password"
+                  id="login-pass"
+                  name="password"
+                  placeholder="Inserisci la password"
+                  autocomplete="current-password"
+                  required
+                />
+              </div>
+
+              <div class="checkbox-row between">
+                <label class="check-wrap">
+                  <input type="checkbox" />
+                  <span>Ricordami</span>
+                </label>
+
+                <a href="#" class="simple-link">Password dimenticata?</a>
+              </div>
+
+              <div id="login-message" class="form-message" aria-live="polite"></div>
+
+              <div class="form-actions">
+                <button type="submit" class="btn btn-primary">Accedi al pannello</button>
+              </div>
+            </form>
+
+            <div class="mini-note">
+              Accesso consentito esclusivamente allo staff tecnico autorizzato.
+            </div>
+          </div>
+
+          <div class="info-stack">
+            <article class="feature-card reveal">
+              <div class="icon-box">🏗️</div>
+              <h3>Gestione cantieri</h3>
+              <p>
+                Crea, aggiorna e organizza i cantieri pubblicati sul sito, mantenendo sempre ordinati
+                dati, stato dei lavori e contenuti visibili ai clienti.
+              </p>
+            </article>
+
+            <article class="feature-card reveal">
+              <div class="icon-box">🖼️</div>
+              <h3>Archivio immagini</h3>
+              <p>
+                Carica e gestisci immagini del prima, del dopo e dell’avanzamento direttamente
+                dalla dashboard tecnica interna.
+              </p>
+            </article>
+
+            <article class="feature-card reveal">
+              <div class="icon-box">📩</div>
+              <h3>Richieste e contenuti</h3>
+              <p>
+                Visualizza le richieste inviate dal sito e prepara progressivamente la gestione
+                dei contenuti pubblici dello studio.
+              </p>
+            </article>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-box">
+          <h4>Studio Tecnico MAAP</h4>
+          <p>
+            Area interna dedicata allo staff tecnico per la gestione operativa del sito e dei contenuti.
+          </p>
+        </div>
+
+        <div class="footer-box">
+          <h4>Recapiti</h4>
+          <ul>
+            <li>Via Esempio 25, Milano</li>
+            <li>+39 02 1234 5678</li>
+            <li>info@studiomaap.it</li>
+            <li>studiomaap@pec.it</li>
+          </ul>
+        </div>
+
+        <div class="footer-box">
+          <h4>Supporto</h4>
+          <ul>
+            <li>Area riservata</li>
+            <li>Gestione contenuti</li>
+            <li>Controllo operativo</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">© 2026 Studio Tecnico MAAP • Login tecnici</div>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

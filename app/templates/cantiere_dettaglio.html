@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>{{ project.titolo }} | Studio Tecnico MAAP</title>
+  <meta name="description" content="{{ project.descrizione_breve }}" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+  <div class="grid-overlay"></div>
+  <div class="orb a"></div>
+  <div class="orb b"></div>
+  <div class="orb c"></div>
+
+  <header>
+    <div class="container nav">
+      <a href="{{ url_for('main.home') }}" class="logo">
+        <div class="logo-box">MA</div>
+        <div>
+          STUDIO TECNICO MAAP
+          <small>PROGETTAZIONE • CANTIERI • PRATICHE • CONSULENZA</small>
+        </div>
+      </a>
+
+      <nav>
+        <ul>
+          <li><a href="{{ url_for('main.home') }}">Home</a></li>
+          <li><a href="{{ url_for('main.cantieri') }}">Cantieri</a></li>
+          <li><a href="{{ url_for('main.preventivi') }}">Preventivi</a></li>
+          <li><a href="{{ url_for('main.tecnici') }}">Tecnici</a></li>
+        </ul>
+      </nav>
+
+      <a href="{{ url_for('main.login') }}" class="btn">Area Tecnici</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <div class="page-hero-box reveal visible">
+          <span class="page-badge">
+            {{ project.categoria if project.categoria else 'CANTIERE' }}
+          </span>
+          <h1>{{ project.titolo }}</h1>
+          <p>
+            {{ project.descrizione_completa if project.descrizione_completa else project.descrizione_breve }}
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Dettagli intervento</h2>
+          </div>
+          <p>
+            Informazioni principali sul progetto pubblicato, con dati essenziali e contenuti fotografici.
+          </p>
+        </div>
+
+        <div class="cards-3">
+          <article class="feature-card">
+            <div class="icon-box">📍</div>
+            <h3>Luogo</h3>
+            <p>{{ project.luogo if project.luogo else '-' }}</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="icon-box">🏷️</div>
+            <h3>Categoria</h3>
+            <p>{{ project.categoria if project.categoria else '-' }}</p>
+          </article>
+
+          <article class="feature-card">
+            <div class="icon-box">🖼️</div>
+            <h3>Immagini</h3>
+            <p>{{ project.numero_foto }} foto disponibili</p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Galleria del cantiere</h2>
+          </div>
+          <p>
+            Una raccolta delle immagini caricate dall’area tecnica per documentare il lavoro svolto.
+          </p>
+        </div>
+
+        {% if project.photos %}
+          <div class="cantieri-grid">
+            {% for photo in project.photos %}
+              <article class="cantiere-card reveal">
+                <div class="cantiere-image">
+                  <img
+                    src="{{ url_for('static', filename=photo.file_path) }}"
+                    alt="{{ project.titolo }}"
+                    class="cantiere-cover-image"
+                  />
+
+                  <div class="cantiere-image-overlay"></div>
+
+                  <div class="cantiere-status">
+                    {{ photo.tipo|capitalize }}
+                  </div>
+                </div>
+
+                <div class="cantiere-body">
+                  <span class="cantiere-type">{{ photo.tipo|capitalize }}</span>
+                  <h3>{{ project.titolo }}</h3>
+                  <p>{{ photo.caption if photo.caption else 'Immagine del cantiere.' }}</p>
+                </div>
+              </article>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="form-panel">
+            <h3 style="margin-bottom: 10px;">Nessuna immagine disponibile</h3>
+            <p class="card-text">
+              Le immagini di questo cantiere verranno caricate e pubblicate dall’area tecnica riservata.
+            </p>
+          </div>
+        {% endif %}
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="cta">
+          <div>
+            <h3>Vuoi richiedere un intervento simile?</h3>
+            <p>
+              Contatta lo studio e invia una richiesta dettagliata tramite il modulo preventivi
+              per ricevere una valutazione tecnica più precisa.
+            </p>
+          </div>
+          <a href="{{ url_for('main.preventivi') }}" class="btn btn-primary">
+            Richiedi un preventivo
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-box">
+          <h4>Studio Tecnico MAAP</h4>
+          <p>
+            Progettazione, pratiche edilizie, cantieri e consulenza tecnica per privati,
+            imprese e professionisti.
+          </p>
+        </div>
+
+        <div class="footer-box">
+          <h4>Recapiti</h4>
+          <ul>
+            <li>Via Esempio 25, Milano</li>
+            <li>+39 02 1234 5678</li>
+            <li>info@studiomaap.it</li>
+            <li>studiomaap@pec.it</li>
+          </ul>
+        </div>
+
+        <div class="footer-box">
+          <h4>Navigazione</h4>
+          <ul>
+            <li><a href="{{ url_for('main.cantieri') }}">Torna ai cantieri</a></li>
+            <li><a href="{{ url_for('main.preventivi') }}">Preventivi</a></li>
+            <li><a href="{{ url_for('main.home') }}">Home</a></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">© 2026 Studio Tecnico MAAP • Dettaglio cantiere</div>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

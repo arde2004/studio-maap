@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tecnici | Studio Tecnico MAAP</title>
+  <meta
+    name="description"
+    content="Scopri il team tecnico dello Studio Tecnico MAAP, con geometri, architetti, ingegneri, tecnici e figure operative dello studio."
+  />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+  <div class="grid-overlay"></div>
+  <div class="orb a"></div>
+  <div class="orb b"></div>
+  <div class="orb c"></div>
+
+  <header>
+    <div class="container nav">
+      <a href="{{ url_for('main.home') }}" class="logo">
+        <div class="logo-box">MA</div>
+        <div>
+          STUDIO TECNICO MAAP
+          <small>PROGETTAZIONE • CANTIERI • PRATICHE • CONSULENZA</small>
+        </div>
+      </a>
+
+      <nav>
+        <ul>
+          <li><a href="{{ url_for('main.home') }}">Home</a></li>
+          <li><a href="{{ url_for('main.cantieri') }}">Cantieri</a></li>
+          <li><a href="{{ url_for('main.preventivi') }}">Preventivi</a></li>
+          <li><a href="{{ url_for('main.tecnici') }}">Tecnici</a></li>
+          <li><a href="{{ url_for('main.login') }}">Accedi</a></li>
+        </ul>
+      </nav>
+
+      <a href="{{ url_for('main.login') }}" class="btn">Area Tecnici</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <div class="page-hero-box reveal visible">
+          <span class="page-badge">TEAM • TECNICI • PROFESSIONISTI</span>
+          <h1>Il team dello <span class="shine">Studio Tecnico MAAP</span></h1>
+          <p>
+            Una squadra composta da geometri, architetti, ingegneri, tecnici e figure operative
+            che collaborano ogni giorno nella gestione di pratiche, progetti, cantieri,
+            documentazione tecnica e supporto ai clienti.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Professionisti organizzati per seguire ogni fase del lavoro</h2>
+          </div>
+          <p>
+            Ogni tecnico contribuisce con competenze specifiche, esperienza operativa e supporto
+            nelle diverse attività dello studio: progettazione, pratiche edilizie, catasto,
+            direzione lavori, grafica tecnica, amministrazione e gestione digitale.
+          </p>
+        </div>
+
+        <div class="tecnici-grid">
+
+          <article class="tech-profile reveal">
+            <div class="tech-avatar">IM</div>
+            <div class="tech-content">
+              <span class="tech-role">Geometra</span>
+              <h3>Invernizzi Michael</h3>
+              <p>Geometra con esperienza completa nelle attività tecniche dello studio, disponibile, operativo e fortemente impegnato nella gestione dei lavori.</p>
+              <div class="tech-tags"><span>Pratiche edilizie</span><span>Catasto</span><span>Cantieri</span><span>Consulenza</span></div>
+              <div class="tech-extra">Esperienza: 15 anni</div>
+            </div>
+          </article>
+
+          <article class="tech-profile reveal">
+            <div class="tech-avatar">CP</div>
+            <div class="tech-content">
+              <span class="tech-role">Geometra</span>
+              <h3>Ciliberti Pietro</h3>
+              <p>Geometra disponibile e preparato, attivo nel supporto tecnico, nella gestione delle pratiche e nelle attività operative dello studio.</p>
+              <div class="tech-tags"><span>Pratiche edilizie</span><span>Catasto</span><span>Rilievi</span><span>Cantieri</span></div>
+              <div class="tech-extra">Esperienza: 10 anni</div>
+            </div>
+          </article>
+
+          <article class="tech-profile reveal">
+            <div class="tech-avatar">RA</div>
+            <div class="tech-content">
+              <span class="tech-role">Architetto</span>
+              <h3>Raffaldi Alessandro</h3>
+              <p>Architetto disponibile e molto impegnato, con competenze ampie nella progettazione, nell’organizzazione tecnica e nello sviluppo degli interventi.</p>
+              <div class="tech-tags"><span>Progettazione</span><span>Consulenza</span><span>Pratiche</span><span>Soluzioni tecniche</span></div>
+              <div class="tech-extra">Esperienza: 10 anni</div>
+            </div>
+          </article>
+
+          <article class="tech-profile reveal">
+            <div class="tech-avatar">MA</div>
+            <div class="tech-content">
+              <span class="tech-role">Ingegnere</span>
+              <h3>Merigo Andrea</h3>
+              <p>Ingegnere disponibile, con competenze tecniche ampie e supporto nelle valutazioni specialistiche, progettuali e operative.</p>
+              <div class="tech-tags"><span>Ingegneria</span><span>Verifiche</span><span>Consulenza</span><span>Progettazione</span></div>
+              <div class="tech-extra">Esperienza: 10 anni</div>
+            </div>
+          </article>
+
+          <article class="tech-profile reveal">
+            <div class="tech-avatar">LL</div>
+            <div class="tech-content">
+              <span class="tech-role">Geometra</span>
+              <h3>Lunghi Lorenzo</h3>
+              <p>Geometra disponibile e molto impegnato, attivo nel supporto tecnico, nella gestione documentale e nelle attività operative dello studio.</p>
+              <div class="tech-tags"><span>Pratiche</span><span>Rilievi</span><span>Documentazione</span><span>Supporto tecnico</span></div>
+              <div class="tech-extra">Esperienza: 5 anni</div>
+            </div>
+          </article>
+
+          <article class="tech-profile reveal">
+            <div class="tech-avatar">AC</div>
+            <div class="tech-content">
+              <span class="tech-role">Tecnico e Programmatore</span>
+              <h3>Ardemagni Christian</h3>
+              <p>Tecnico e programmatore disponibile, con supporto operativo e digitale per strumenti interni, gestione dati e organizzazione tecnica.</p>
+              <div class="tech-tags"><span>Tecnico</span><span>Programmazione</span><span>Gestionale</span><span>Supporto digitale</span></div>
+              <div class="tech-extra">Esperienza: 3 anni</div>
+            </div>
+          </article>
+
+          <article class="tech-profile reveal">
+            <div class="tech-avatar">RF</div>
+            <div class="tech-content">
+              <span class="tech-role">Tecnico</span>
+              <h3>Rinzaghi Francesco</h3>
+              <p>Tecnico disponibile, attivo nel supporto alle attività operative, documentali e organizzative dello studio.</p>
+              <div class="tech-tags"><span>Supporto tecnico</span><span>Documentazione</span><span>Pratiche</span></div>
+              <div class="tech-extra">Esperienza: 3 anni</div>
+            </div>
+          </article>
+
+          <article class="tech-profile reveal">
+            <div class="tech-avatar">IC</div>
+            <div class="tech-content">
+              <span class="tech-role">Tecnico, Amministratore e Contabile</span>
+              <h3>Invernizzi Cristian</h3>
+              <p>Figura tecnica, amministrativa e contabile molto impegnata, con competenze complete nella gestione operativa e organizzativa dello studio.</p>
+              <div class="tech-tags"><span>Amministrazione</span><span>Contabilità</span><span>Gestione</span><span>Organizzazione</span></div>
+              <div class="tech-extra">Esperienza: 8 anni</div>
+            </div>
+          </article>
+
+          <article class="tech-profile reveal">
+            <div class="tech-avatar">MC</div>
+            <div class="tech-content">
+              <span class="tech-role">Architetto</span>
+              <h3>Merescotti Cinzia</h3>
+              <p>Architetto disponibile, con supporto alla progettazione, alla documentazione tecnica e alla gestione degli interventi.</p>
+              <div class="tech-tags"><span>Architettura</span><span>Progettazione</span><span>Documentazione</span></div>
+              <div class="tech-extra">Esperienza: 5 anni</div>
+            </div>
+          </article>
+
+          <article class="tech-profile reveal">
+            <div class="tech-avatar">SL</div>
+            <div class="tech-content">
+              <span class="tech-role">Tecnico e Grafico</span>
+              <h3>Scarpa Lazzaro “Rino”</h3>
+              <p>Tecnico e grafico disponibile, specializzato nel supporto visivo, grafico e tecnico alla presentazione degli elaborati.</p>
+              <div class="tech-tags"><span>Grafica tecnica</span><span>Elaborati</span><span>Disegno</span><span>Supporto tecnico</span></div>
+              <div class="tech-extra">Esperienza: 5 anni</div>
+            </div>
+          </article>
+
+          <article class="tech-profile reveal">
+            <div class="tech-avatar">A</div>
+            <div class="tech-content">
+              <span class="tech-role">Geometra</span>
+              <h3>Alessandro</h3>
+              <p>Geometra disponibile, in crescita professionale e attivo nel supporto alle attività tecniche dello studio.</p>
+              <div class="tech-tags"><span>Supporto tecnico</span><span>Pratiche</span><span>Rilievi</span></div>
+              <div class="tech-extra">Esperienza: 1 anno</div>
+            </div>
+          </article>
+
+          <article class="tech-profile reveal">
+            <div class="tech-avatar">DN</div>
+            <div class="tech-content">
+              <span class="tech-role">Geometra</span>
+              <h3>Desio Nicolò</h3>
+              <p>Geometra disponibile e impegnato, attivo nel supporto tecnico, nella gestione documentale e nelle attività operative.</p>
+              <div class="tech-tags"><span>Pratiche</span><span>Rilievi</span><span>Documentazione</span></div>
+              <div class="tech-extra">Esperienza: 3 anni</div>
+            </div>
+          </article>
+
+          <article class="tech-profile reveal">
+            <div class="tech-avatar">DL</div>
+            <div class="tech-content">
+              <span class="tech-role">Geometra</span>
+              <h3>Duranti Luca</h3>
+              <p>Geometra disponibile e impegnato, con supporto nelle attività tecniche, documentali e operative dello studio.</p>
+              <div class="tech-tags"><span>Pratiche edilizie</span><span>Catasto</span><span>Supporto tecnico</span></div>
+              <div class="tech-extra">Esperienza: 3 anni</div>
+            </div>
+          </article>
+
+          <article class="tech-profile reveal">
+            <div class="tech-avatar">MM</div>
+            <div class="tech-content">
+              <span class="tech-role">Ingegnere</span>
+              <h3>Micheletti Marco</h3>
+              <p>Ingegnere disponibile e impegnato, con esperienza consolidata e competenze tecniche ampie nelle valutazioni specialistiche.</p>
+              <div class="tech-tags"><span>Ingegneria</span><span>Verifiche tecniche</span><span>Consulenza</span><span>Progettazione</span></div>
+              <div class="tech-extra">Esperienza: 15 anni</div>
+            </div>
+          </article>
+
+          <article class="tech-profile reveal">
+            <div class="tech-avatar">GL</div>
+            <div class="tech-content">
+              <span class="tech-role">Geometra</span>
+              <h3>Gigliotti Lucrezia</h3>
+              <p>Geometra disponibile, attiva nel supporto tecnico, nella gestione delle pratiche e nella documentazione dello studio.</p>
+              <div class="tech-tags"><span>Pratiche</span><span>Documentazione</span><span>Supporto tecnico</span></div>
+              <div class="tech-extra">Esperienza: 3 anni</div>
+            </div>
+          </article>
+
+          <article class="tech-profile reveal">
+            <div class="tech-avatar">CG</div>
+            <div class="tech-content">
+              <span class="tech-role">Ingegnere</span>
+              <h3>Cerra Gianluca</h3>
+              <p>Ingegnere impegnato e disponibile, con competenze tecniche ampie e supporto specialistico nelle attività progettuali e operative.</p>
+              <div class="tech-tags"><span>Ingegneria</span><span>Progettazione</span><span>Consulenza</span><span>Verifiche</span></div>
+              <div class="tech-extra">Esperienza: 8 anni</div>
+            </div>
+          </article>
+
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="container">
+        <div class="cta reveal">
+          <div>
+            <h3>Un team completo per pratiche, progetti e cantieri</h3>
+            <p>
+              Lo Studio Tecnico MAAP lavora con una squadra strutturata, composta da figure tecniche,
+              progettuali, amministrative e operative per seguire ogni fase del lavoro con ordine e continuità.
+            </p>
+          </div>
+          <a href="{{ url_for('main.preventivi') }}" class="btn btn-primary">Richiedi un preventivo</a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-box">
+          <h4>Studio Tecnico MAAP</h4>
+          <p>
+            Un team tecnico organizzato, moderno e pronto a seguire ogni fase del lavoro
+            con competenza, precisione e visione operativa.
+          </p>
+        </div>
+
+        <div class="footer-box">
+          <h4>Recapiti</h4>
+          <ul>
+            <li>Via Esempio 25, Milano</li>
+            <li>+39 02 1234 5678</li>
+            <li>info@studiomaap.it</li>
+            <li>studiomaap@pec.it</li>
+          </ul>
+        </div>
+
+        <div class="footer-box">
+          <h4>Aree operative</h4>
+          <ul>
+            <li>Progettazione</li>
+            <li>Pratiche edilizie</li>
+            <li>Catasto</li>
+            <li>Cantieri</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">© 2026 Studio Tecnico MAAP • Pagina tecnici</div>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>

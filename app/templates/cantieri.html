@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cantieri | Studio Tecnico MAAP</title>
+  <meta
+    name="description"
+    content="Scopri i cantieri seguiti dallo Studio Tecnico MAAP, con interventi, immagini e dettagli tecnici."
+  />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+  <div class="grid-overlay"></div>
+  <div class="orb a"></div>
+  <div class="orb b"></div>
+  <div class="orb c"></div>
+
+  <header>
+    <div class="container nav">
+      <a href="{{ url_for('main.home') }}" class="logo">
+        <div class="logo-box">MA</div>
+        <div>
+          STUDIO TECNICO MAAP
+          <small>PROGETTAZIONE • CANTIERI • PRATICHE • CONSULENZA</small>
+        </div>
+      </a>
+
+      <nav>
+        <ul>
+          <li><a href="{{ url_for('main.home') }}">Home</a></li>
+          <li><a href="{{ url_for('main.cantieri') }}">Cantieri</a></li>
+          <li><a href="{{ url_for('main.preventivi') }}">Preventivi</a></li>
+          <li><a href="{{ url_for('main.tecnici') }}">Tecnici</a></li>
+          <li><a href="{{ url_for('main.login') }}">Accedi</a></li>
+        </ul>
+      </nav>
+
+      <a href="{{ url_for('main.login') }}" class="btn">Area Tecnici</a>
+    </div>
+  </header>
+
+  <main>
+    <section class="page-hero">
+      <div class="container">
+        <div class="page-hero-box reveal visible">
+          <span class="page-badge">CANTIERI • PROGETTI • INTERVENTI REALI</span>
+          <h1>I cantieri dello <span class="shine">Studio Tecnico MAAP</span></h1>
+          <p>
+            In questa sezione trovi i principali lavori pubblicati dallo studio, con descrizione,
+            località, immagini e stato dell’intervento. Una selezione dei progetti seguiti
+            dal team nelle diverse aree operative.
+          </p>
+        </div>
+      </div>
+    </section>
+
+    <section class="cantieri-section">
+      <div class="container">
+        <div class="section-head">
+          <div>
+            <h2>Progetti e lavori pubblicati</h2>
+          </div>
+          <p>
+            Filtra i cantieri per categoria e consulta gli interventi pubblicati,
+            con informazioni sintetiche e accesso alla scheda dettagliata.
+          </p>
+        </div>
+
+        <div class="filters-bar reveal">
+          <button class="filter-btn active" data-filter="all" type="button">Tutti</button>
+          <button class="filter-btn" data-filter="ristrutturazione" type="button">Ristrutturazioni</button>
+          <button class="filter-btn" data-filter="catasto" type="button">Catasto</button>
+          <button class="filter-btn" data-filter="direzione-lavori" type="button">Direzione lavori</button>
+          <button class="filter-btn" data-filter="pratiche" type="button">Pratiche edilizie</button>
+        </div>
+
+        {% if projects %}
+          <div class="cantieri-grid">
+            {% for project in projects %}
+              <article class="cantiere-card reveal" data-category="{{ project.categoria|lower if project.categoria else '' }}">
+                <div class="cantiere-image">
+                  {% if project.cover_path %}
+                    <img
+                      src="{{ url_for('static', filename=project.cover_path) }}"
+                      alt="{{ project.titolo }}"
+                      class="cantiere-cover-image"
+                    />
+                  {% endif %}
+
+                  <div class="cantiere-image-overlay"></div>
+
+                  <div class="cantiere-status">
+                    {{ project.stato|capitalize if project.stato else 'Pubblicato' }}
+                  </div>
+                </div>
+
+                <div class="cantiere-body">
+                  <span class="cantiere-type">
+                    {{ project.categoria if project.categoria else 'Cantiere' }}
+                  </span>
+
+                  <h3>{{ project.titolo }}</h3>
+
+                  <p>
+                    {{ project.descrizione_breve if project.descrizione_breve else 'Descrizione in aggiornamento.' }}
+                  </p>
+
+                  <div class="cantiere-meta">
+                    <div><strong>Luogo:</strong> {{ project.luogo if project.luogo else '-' }}</div>
+                    <div><strong>Foto disponibili:</strong> {{ project.numero_foto }}</div>
+                  </div>
+
+                  <div class="cantiere-actions">
+                    <a href="{{ url_for('main.dettaglio_cantiere', slug=project.slug) }}" class="btn btn-primary small-btn">
+                      Vedi dettagli
+                    </a>
+                  </div>
+                </div>
+              </article>
+            {% endfor %}
+          </div>
+        {% else %}
+          <div class="form-panel reveal visible">
+            <h3 style="margin-bottom: 10px;">Nessun cantiere pubblicato</h3>
+            <p class="card-text">
+              Al momento non ci sono cantieri visibili sul sito. Appena verranno pubblicati dalla dashboard,
+              compariranno qui in modo automatico.
+            </p>
+          </div>
+        {% endif %}
+      </div>
+    </section>
+  </main>
+
+  <footer id="contatti">
+    <div class="container">
+      <div class="footer-grid">
+        <div class="footer-box">
+          <h4>Studio Tecnico MAAP</h4>
+          <p>
+            Progettazione, pratiche edilizie e catastali, consulenza tecnica,
+            gestione cantieri e supporto completo in tutte le fasi del lavoro.
+          </p>
+        </div>
+
+        <div class="footer-box">
+          <h4>Recapiti</h4>
+          <ul>
+            <li>Via Esempio 25, Milano</li>
+            <li>+39 02 1234 5678</li>
+            <li>info@studiomaap.it</li>
+            <li>studiomaap@pec.it</li>
+          </ul>
+        </div>
+
+        <div class="footer-box">
+          <h4>Orari studio</h4>
+          <ul>
+            <li>Lunedì - Venerdì: 09:00 - 18:30</li>
+            <li>Sabato: su appuntamento</li>
+            <li>Domenica: chiuso</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="footer-bottom">© 2026 Studio Tecnico MAAP • Pagina cantieri</div>
+    </div>
+  </footer>
+
+  <script src="{{ url_for('static', filename='js/script.js') }}"></script>
+</body>
+</html>
