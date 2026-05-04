@@ -5,7 +5,7 @@ from flask import Blueprint, request, jsonify, current_app
 from werkzeug.utils import secure_filename
 
 from app import db
-from app.models import QuoteRequest, QuoteAttachment, Project, ProjectPhoto
+from app.models import QuoteRequest, QuoteAttachment, Project, ProjectPhoto, SiteSetting
 
 api_bp = Blueprint("api", __name__)
 
@@ -472,6 +472,74 @@ def api_delete_photo(photo_id):
         return jsonify({
             "ok": True,
             "messaggio": "Foto eliminata correttamente."
+        })
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({
+            "ok": False,
+            "messaggio": f"Errore server: {str(e)}"
+        }), 500
+
+@api_bp.route("/api/settings", methods=["GET"])
+def api_get_settings():
+    try:
+        settings = SiteSetting.query.all()
+
+        data = {}
+        for item in settings:
+            data[item.chiave] = item.valore or ""
+
+        return jsonify({
+            "ok": True,
+            "settings": data
+        })
+
+    except Exception as e:
+        return jsonify({
+            "ok": False,
+            "messaggio": f"Errore server: {str(e)}"
+        }), 500
+
+
+@api_bp.route("/api/settings", methods=["POST"])
+def api_save_settings():
+    try:
+        fields = [
+            "home_titolo",
+            "home_sottotitolo",
+            "home_stat_1",
+            "home_stat_2",
+            "studio_nome",
+            "studio_indirizzo",
+            "studio_telefono",
+            "studio_email",
+            "studio_pec",
+            "studio_orari",
+            "servizi_testo",
+            "cantieri_testo",
+            "tecnici_testo"
+        ]
+
+        for key in fields:
+            value = (request.form.get(key) or "").strip()
+
+            setting = SiteSetting.query.filter_by(chiave=key).first()
+
+            if setting:
+                setting.valore = value
+            else:
+                setting = SiteSetting(
+                    chiave=key,
+                    valore=value
+                )
+                db.session.add(setting)
+
+        db.session.commit()
+
+        return jsonify({
+            "ok": True,
+            "messaggio": "Contenuti salvati correttamente."
         })
 
     except Exception as e:
