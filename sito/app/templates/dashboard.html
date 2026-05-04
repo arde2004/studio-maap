@@ -4,10 +4,7 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Dashboard Tecnici | Studio Tecnico MAAP</title>
-  <meta
-    name="description"
-    content="Dashboard tecnica dello Studio Tecnico MAAP per la gestione interna di cantieri, richieste e contenuti."
-  />
+  <meta name="description" content="Dashboard tecnica dello Studio Tecnico MAAP per la gestione interna di cantieri, richieste e contenuti." />
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 </head>
 <body>
@@ -44,10 +41,10 @@
       <div class="container">
         <div class="page-hero-box reveal visible">
           <span class="page-badge">AREA TECNICA RISERVATA</span>
-          <h1>Controllo <span class="shine">cantieri, immagini e richieste</span></h1>
+          <h1>Controllo <span class="shine">cantieri, immagini e contenuti</span></h1>
           <p>
-            Da questa area riservata lo staff tecnico può creare e modificare i cantieri,
-            caricare immagini, controllare le richieste ricevute dal sito e preparare i contenuti pubblici.
+            Da questa area riservata puoi gestire cantieri, richieste preventivo, immagini,
+            testi della homepage, recapiti dello studio e informazioni pubbliche.
           </p>
         </div>
       </div>
@@ -65,15 +62,10 @@
 
           <div class="dashboard-content">
 
-            <!-- TAB CANTIERI -->
             <div class="tab active" id="cantieri">
               <div class="section-head form-head">
-                <div>
-                  <h2>Gestione cantieri</h2>
-                </div>
-                <p>
-                  Crea nuovi lavori, modifica quelli esistenti e gestisci la visibilità pubblica del sito.
-                </p>
+                <div><h2>Gestione cantieri</h2></div>
+                <p>Crea nuovi lavori, modifica quelli esistenti e gestisci la visibilità pubblica.</p>
               </div>
 
               <div class="form-panel" style="margin-bottom: 24px;">
@@ -83,13 +75,7 @@
                   <div class="form-grid">
                     <div class="form-group">
                       <label for="project-titolo">Titolo cantiere</label>
-                      <input
-                        type="text"
-                        id="project-titolo"
-                        name="titolo"
-                        placeholder="Es. Ristrutturazione Milano"
-                        required
-                      />
+                      <input type="text" id="project-titolo" name="titolo" placeholder="Es. Ristrutturazione Milano" required />
                     </div>
 
                     <div class="form-group">
@@ -105,51 +91,27 @@
 
                     <div class="form-group">
                       <label for="project-luogo">Luogo</label>
-                      <input
-                        type="text"
-                        id="project-luogo"
-                        name="luogo"
-                        placeholder="Es. Milano"
-                      />
+                      <input type="text" id="project-luogo" name="luogo" placeholder="Es. Milano" />
                     </div>
 
                     <div class="form-group">
                       <label for="project-descrizione">Descrizione breve</label>
-                      <input
-                        type="text"
-                        id="project-descrizione"
-                        name="descrizione_breve"
-                        placeholder="Descrizione sintetica del cantiere"
-                      />
+                      <input type="text" id="project-descrizione" name="descrizione_breve" placeholder="Descrizione sintetica del cantiere" />
                     </div>
                   </div>
 
                   <div id="project-message" class="form-message" aria-live="polite"></div>
 
                   <div class="form-actions">
-                    <button type="submit" class="btn btn-primary" id="project-submit-btn">
-                      Crea cantiere
-                    </button>
-
-                    <button
-                      type="button"
-                      class="btn btn-secondary"
-                      id="project-cancel-btn"
-                      style="display: none;"
-                    >
-                      Annulla modifica
-                    </button>
+                    <button type="submit" class="btn btn-primary" id="project-submit-btn">Crea cantiere</button>
+                    <button type="button" class="btn btn-secondary" id="project-cancel-btn" style="display: none;">Annulla modifica</button>
                   </div>
                 </form>
               </div>
 
               <div class="section-head form-head">
-                <div>
-                  <h2>Elenco cantieri</h2>
-                </div>
-                <p>
-                  Qui compariranno tutti i cantieri salvati nel sistema, con i comandi di modifica e gestione.
-                </p>
+                <div><h2>Elenco cantieri</h2></div>
+                <p>Qui compariranno tutti i cantieri salvati nel sistema.</p>
               </div>
 
               <div id="lista-cantieri-dashboard" class="dashboard-cards">
@@ -160,15 +122,10 @@
               </div>
             </div>
 
-            <!-- TAB UPLOAD FOTO -->
             <div class="tab" id="upload">
               <div class="section-head form-head">
-                <div>
-                  <h2>Carica foto cantiere</h2>
-                </div>
-                <p>
-                  Seleziona un cantiere esistente, imposta il tipo di immagine e carica il file dal tuo computer.
-                </p>
+                <div><h2>Carica foto cantiere</h2></div>
+                <p>Seleziona un cantiere esistente, imposta il tipo di immagine e carica il file.</p>
               </div>
 
               <div class="form-panel" style="margin-bottom: 24px;">
@@ -194,22 +151,12 @@
 
                   <div class="form-group">
                     <label for="upload-caption">Descrizione foto</label>
-                    <input
-                      type="text"
-                      id="upload-caption"
-                      name="caption"
-                      placeholder="Inserisci una descrizione breve"
-                    />
+                    <input type="text" id="upload-caption" name="caption" placeholder="Inserisci una descrizione breve" />
                   </div>
 
                   <div class="form-group">
                     <label for="upload-file">Seleziona immagine</label>
-                    <input
-                      type="file"
-                      id="upload-file"
-                      name="file"
-                      accept=".png,.jpg,.jpeg,.webp"
-                    />
+                    <input type="file" id="upload-file" name="file" accept=".png,.jpg,.jpeg,.webp" />
                   </div>
 
                   <div class="form-actions">
@@ -219,12 +166,8 @@
               </div>
 
               <div class="section-head form-head">
-                <div>
-                  <h2>Archivio immagini</h2>
-                </div>
-                <p>
-                  Seleziona un cantiere e visualizza qui tutte le immagini già caricate, con possibilità di eliminarle.
-                </p>
+                <div><h2>Archivio immagini</h2></div>
+                <p>Seleziona un cantiere e visualizza qui tutte le immagini già caricate.</p>
               </div>
 
               <div id="lista-foto-cantiere" class="dashboard-cards">
@@ -235,15 +178,10 @@
               </div>
             </div>
 
-            <!-- TAB RICHIESTE -->
             <div class="tab" id="richieste">
               <div class="section-head form-head">
-                <div>
-                  <h2>Richieste preventivo</h2>
-                </div>
-                <p>
-                  In questa sezione vengono raccolte e mostrate le richieste inviate dai clienti dal sito pubblico.
-                </p>
+                <div><h2>Richieste preventivo</h2></div>
+                <p>Qui vengono raccolte le richieste inviate dai clienti dal sito pubblico.</p>
               </div>
 
               <div id="lista-richieste" class="dashboard-cards">
@@ -254,44 +192,105 @@
               </div>
             </div>
 
-            <!-- TAB CONTENUTI -->
             <div class="tab" id="contenuti">
               <div class="section-head form-head">
-                <div>
-                  <h2>Gestione contenuti</h2>
-                </div>
-                <p>
-                  Area predisposta per aggiornare testi del sito, sezioni pubbliche e informazioni principali dello studio.
-                </p>
+                <div><h2>Gestione contenuti sito</h2></div>
+                <p>Modifica testi, recapiti e informazioni principali mostrate nelle pagine pubbliche.</p>
               </div>
 
-              <div class="dashboard-cards">
-                <div class="dash-card">
-                  <h3>Homepage</h3>
-                  <p>
-                    Hero section, testi introduttivi, servizi principali e contenuti in evidenza del sito.
-                  </p>
-                  <button class="btn btn-primary small-btn" type="button">Modifica</button>
-                </div>
+              <div class="form-panel" style="margin-bottom: 24px;">
+                <form class="quote-form" id="siteSettingsForm" novalidate>
 
-                <div class="dash-card">
-                  <h3>Recapiti studio</h3>
-                  <p>
-                    Telefono, email, PEC, indirizzo, orari di apertura e riferimenti generali dello studio.
-                  </p>
-                  <button class="btn btn-primary small-btn" type="button">Modifica</button>
-                </div>
+                  <div class="dash-card">
+                    <h3>Homepage</h3>
 
-                <div class="dash-card">
-                  <h3>Sezione tecnici</h3>
-                  <p>
-                    Profili pubblici del team, competenze, ruoli operativi e descrizioni professionali dei tecnici.
-                  </p>
-                  <button class="btn btn-primary small-btn" type="button">Modifica</button>
-                </div>
+                    <div class="form-group">
+                      <label for="home_titolo">Titolo principale homepage</label>
+                      <input type="text" id="home_titolo" name="home_titolo" placeholder="Titolo principale del sito" />
+                    </div>
+
+                    <div class="form-group">
+                      <label for="home_sottotitolo">Testo introduttivo homepage</label>
+                      <textarea id="home_sottotitolo" name="home_sottotitolo" placeholder="Descrizione introduttiva dello studio"></textarea>
+                    </div>
+
+                    <div class="form-grid">
+                      <div class="form-group">
+                        <label for="home_stat_1">Statistica 1</label>
+                        <input type="text" id="home_stat_1" name="home_stat_1" placeholder="+120 pratiche gestite" />
+                      </div>
+
+                      <div class="form-group">
+                        <label for="home_stat_2">Statistica 2</label>
+                        <input type="text" id="home_stat_2" name="home_stat_2" placeholder="+15 anni esperienza" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="dash-card">
+                    <h3>Recapiti studio</h3>
+
+                    <div class="form-grid">
+                      <div class="form-group">
+                        <label for="studio_nome">Nome studio</label>
+                        <input type="text" id="studio_nome" name="studio_nome" placeholder="Studio Tecnico MAAP" />
+                      </div>
+
+                      <div class="form-group">
+                        <label for="studio_indirizzo">Indirizzo</label>
+                        <input type="text" id="studio_indirizzo" name="studio_indirizzo" placeholder="Via ..., Comune" />
+                      </div>
+
+                      <div class="form-group">
+                        <label for="studio_telefono">Telefono</label>
+                        <input type="text" id="studio_telefono" name="studio_telefono" placeholder="+39 ..." />
+                      </div>
+
+                      <div class="form-group">
+                        <label for="studio_email">Email</label>
+                        <input type="email" id="studio_email" name="studio_email" placeholder="info@..." />
+                      </div>
+
+                      <div class="form-group">
+                        <label for="studio_pec">PEC</label>
+                        <input type="email" id="studio_pec" name="studio_pec" placeholder="pec@..." />
+                      </div>
+
+                      <div class="form-group">
+                        <label for="studio_orari">Orari</label>
+                        <input type="text" id="studio_orari" name="studio_orari" placeholder="Lunedì - Venerdì: 09:00 - 18:30" />
+                      </div>
+                    </div>
+                  </div>
+
+                  <div class="dash-card">
+                    <h3>Testi sezioni pubbliche</h3>
+
+                    <div class="form-group">
+                      <label for="servizi_testo">Testo sezione servizi</label>
+                      <textarea id="servizi_testo" name="servizi_testo" placeholder="Descrizione dei servizi tecnici offerti"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="cantieri_testo">Testo sezione cantieri</label>
+                      <textarea id="cantieri_testo" name="cantieri_testo" placeholder="Descrizione dei cantieri e lavori pubblicati"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                      <label for="tecnici_testo">Testo sezione tecnici</label>
+                      <textarea id="tecnici_testo" name="tecnici_testo" placeholder="Descrizione del team tecnico"></textarea>
+                    </div>
+                  </div>
+
+                  <div id="settings-message" class="form-message" aria-live="polite"></div>
+
+                  <div class="form-actions">
+                    <button class="btn btn-primary" type="submit">Salva contenuti</button>
+                    <button class="btn btn-secondary" type="button" id="reload-settings-btn">Ricarica dati</button>
+                  </div>
+                </form>
               </div>
             </div>
-            <!-- FINE TAB -->
 
           </div>
         </div>
