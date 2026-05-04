@@ -1,40 +1,36 @@
 document.addEventListener("DOMContentLoaded", () => {
   initRevealAnimations();
+  initDemoButtons();
   initCantieriFilters();
   initDashboardTabs();
   initLoginForm();
   initLogout();
   initQuoteForm();
-  initUploadForm();
   initProjectForm();
+  initUploadForm();
+  initUploadSelect();
+
   loadRichiesteDashboard();
   loadProjectsDashboard();
-  initDemoButtons();
 });
 
 function initRevealAnimations() {
   const reveals = document.querySelectorAll(".reveal");
   if (!reveals.length) return;
 
-  const observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add("visible");
-        }
-      });
-    },
-    { threshold: 0.15 }
-  );
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry) => {
+      if (entry.isIntersecting) entry.target.classList.add("visible");
+    });
+  }, { threshold: 0.15 });
 
-  reveals.forEach((element) => observer.observe(element));
+  reveals.forEach((el) => observer.observe(el));
 }
 
 function initDemoButtons() {
-  const demoButtons = document.querySelectorAll(".demo-detail-btn");
-  demoButtons.forEach((button) => {
+  document.querySelectorAll(".demo-detail-btn").forEach((button) => {
     button.addEventListener("click", () => {
-      alert("Questa funzione sarà collegata ai dettagli reali del cantiere nei prossimi step.");
+      alert("Funzione dimostrativa: verrà collegata ai dati reali del cantiere.");
     });
   });
 }
@@ -42,7 +38,6 @@ function initDemoButtons() {
 function initCantieriFilters() {
   const filterButtons = document.querySelectorAll(".filter-btn");
   const cards = document.querySelectorAll(".cantiere-card");
-
   if (!filterButtons.length || !cards.length) return;
 
   filterButtons.forEach((btn) => {
@@ -54,53 +49,42 @@ function initCantieriFilters() {
 
       cards.forEach((card) => {
         const category = (card.dataset.category || "").toLowerCase();
-
-        if (filter === "all" || category === filter) {
-          card.classList.remove("hidden");
-        } else {
-          card.classList.add("hidden");
-        }
+        card.classList.toggle("hidden", filter !== "all" && category !== filter);
       });
     });
   });
 }
 
 function initDashboardTabs() {
-  const dashButtons = document.querySelectorAll(".dash-btn");
+  const buttons = document.querySelectorAll(".dash-btn");
   const tabs = document.querySelectorAll(".tab");
+  if (!buttons.length || !tabs.length) return;
 
-  if (!dashButtons.length || !tabs.length) return;
-
-  dashButtons.forEach((btn) => {
+  buttons.forEach((btn) => {
     btn.addEventListener("click", () => {
       const target = btn.dataset.tab;
 
-      dashButtons.forEach((b) => b.classList.remove("active"));
+      buttons.forEach((b) => b.classList.remove("active"));
       btn.classList.add("active");
 
       tabs.forEach((tab) => {
-        tab.classList.remove("active");
-        if (tab.id === target) {
-          tab.classList.add("active");
-        }
+        tab.classList.toggle("active", tab.id === target);
       });
     });
   });
 }
 
 function initLoginForm() {
-  const loginForm = document.getElementById("loginForm");
-  if (!loginForm) return;
+  const form = document.getElementById("loginForm");
+  if (!form) return;
 
-  const usernameInput = document.getElementById("login-user");
-  const passwordInput = document.getElementById("login-pass");
   const messageBox = document.getElementById("login-message");
 
-  loginForm.addEventListener("submit", async (event) => {
+  form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
-    const username = usernameInput ? usernameInput.value.trim() : "";
-    const password = passwordInput ? passwordInput.value.trim() : "";
+    const username = document.getElementById("login-user")?.value.trim() || "";
+    const password = document.getElementById("login-pass")?.value.trim() || "";
 
     if (!username || !password) {
       setMessage(messageBox, "Inserisci nome utente e password.", false);
@@ -112,21 +96,18 @@ function initLoginForm() {
     try {
       const response = await fetch("/api/login", {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json"
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password })
       });
 
       const data = await response.json();
 
       if (data.ok) {
-        setMessage(messageBox, "Accesso effettuato. Reindirizzamento...", true);
         window.location.href = data.redirect || "/dashboard";
       } else {
         setMessage(messageBox, data.messaggio || "Login non valido.", false);
       }
-    } catch (error) {
+    } catch {
       setMessage(messageBox, "Errore di connessione al server.", false);
     }
   });
@@ -138,74 +119,68 @@ function initLogout() {
 
   logoutBtn.addEventListener("click", async () => {
     try {
-      await fetch("/api/logout", {
-        method: "POST"
-      });
-    } catch (error) {
-      // niente
-    }
-
+      await fetch("/api/logout", { method: "POST" });
+    } catch {}
     window.location.href = "/login";
   });
 }
 
 function initQuoteForm() {
-  const quoteForm = document.getElementById("quoteForm");
-  if (!quoteForm) return;
+  const form = document.getElementById("quoteForm");
+  if (!form) return;
 
   const messageBox = document.getElementById("quote-message");
 
-  quoteForm.addEventListener("submit", async (event) => {
+  form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     const nome = document.getElementById("nome")?.value.trim() || "";
     const email = document.getElementById("email")?.value.trim() || "";
     const descrizione = document.getElementById("descrizione")?.value.trim() || "";
-    const privacyChecked = document.getElementById("privacy-check")?.checked || false;
+    const privacy = document.getElementById("privacy-check")?.checked || false;
 
     if (!nome || !email || !descrizione) {
-      setMessage(messageBox, "Compila almeno nome, email e descrizione del lavoro.", false);
+      setMessage(messageBox, "Compila almeno nome, email e descrizione.", false);
       return;
     }
 
-    if (!privacyChecked) {
-      setMessage(messageBox, "Devi autorizzare il trattamento dei dati per inviare la richiesta.", false);
+    if (!privacy) {
+      setMessage(messageBox, "Devi autorizzare il trattamento dei dati.", false);
       return;
     }
 
-    const formData = new FormData(quoteForm);
     setMessage(messageBox, "Invio richiesta in corso...", true);
 
     try {
       const response = await fetch("/api/preventivo", {
         method: "POST",
-        body: formData
+        body: new FormData(form)
       });
 
       const data = await response.json();
 
       if (data.ok) {
         setMessage(messageBox, data.messaggio || "Richiesta inviata correttamente.", true);
-        quoteForm.reset();
+        form.reset();
       } else {
-        setMessage(messageBox, data.messaggio || "Errore durante l'invio della richiesta.", false);
+        setMessage(messageBox, data.messaggio || "Errore durante l'invio.", false);
       }
-    } catch (error) {
+    } catch {
       setMessage(messageBox, "Errore di connessione al server.", false);
     }
   });
 }
 
 function initProjectForm() {
-  const projectForm = document.getElementById("projectForm");
-  if (!projectForm) return;
+  const form = document.getElementById("projectForm");
+  if (!form) return;
 
   const messageBox = document.getElementById("project-message");
   const hiddenId = document.getElementById("project-id");
   const submitBtn = document.getElementById("project-submit-btn");
   const cancelBtn = document.getElementById("project-cancel-btn");
 
-  projectForm.addEventListener("submit", async (event) => {
+  form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     const titolo = document.getElementById("project-titolo")?.value.trim() || "";
@@ -216,35 +191,30 @@ function initProjectForm() {
       return;
     }
 
-    const formData = new FormData(projectForm);
     const url = projectId ? `/api/projects/${projectId}` : "/api/projects";
 
     setMessage(
       messageBox,
-      projectId ? "Aggiornamento cantiere in corso..." : "Creazione cantiere in corso...",
+      projectId ? "Salvataggio modifiche in corso..." : "Creazione cantiere in corso...",
       true
     );
 
     try {
       const response = await fetch(url, {
         method: "POST",
-        body: formData
+        body: new FormData(form)
       });
 
       const data = await response.json();
 
       if (data.ok) {
-        setMessage(
-          messageBox,
-          data.messaggio || (projectId ? "Cantiere aggiornato correttamente." : "Cantiere creato correttamente."),
-          true
-        );
+        setMessage(messageBox, data.messaggio || "Operazione completata.", true);
         resetProjectForm();
         await loadProjectsDashboard();
       } else {
-        setMessage(messageBox, data.messaggio || "Errore durante il salvataggio del cantiere.", false);
+        setMessage(messageBox, data.messaggio || "Errore durante il salvataggio.", false);
       }
-    } catch (error) {
+    } catch {
       setMessage(messageBox, "Errore di connessione al server.", false);
     }
   });
@@ -257,7 +227,7 @@ function initProjectForm() {
   }
 
   function resetProjectForm() {
-    projectForm.reset();
+    form.reset();
     if (hiddenId) hiddenId.value = "";
     if (submitBtn) submitBtn.textContent = "Crea cantiere";
     if (cancelBtn) cancelBtn.style.display = "none";
@@ -265,52 +235,56 @@ function initProjectForm() {
 }
 
 function initUploadForm() {
-  const uploadForm = document.getElementById("uploadForm");
-  if (!uploadForm) return;
+  const form = document.getElementById("uploadForm");
+  if (!form) return;
 
-  uploadForm.addEventListener("submit", async (event) => {
+  form.addEventListener("submit", async (event) => {
     event.preventDefault();
 
     const projectId = document.getElementById("upload-cantiere")?.value || "";
-    const fileInput = document.getElementById("upload-file");
-    const selectedFile = fileInput?.files?.[0];
+    const file = document.getElementById("upload-file")?.files?.[0];
 
     if (!projectId) {
       alert("Seleziona un cantiere.");
       return;
     }
 
-    if (!selectedFile) {
+    if (!file) {
       alert("Seleziona un'immagine da caricare.");
       return;
     }
 
-    const formData = new FormData(uploadForm);
-
     try {
       const response = await fetch("/api/upload-photo", {
         method: "POST",
-        body: formData
+        body: new FormData(form)
       });
 
       const data = await response.json();
 
       if (data.ok) {
         alert(data.messaggio || "Immagine caricata correttamente.");
-        const selectedProjectId = projectId;
-        uploadForm.reset();
+        form.reset();
 
         const select = document.getElementById("upload-cantiere");
-        if (select && selectedProjectId) {
-          select.value = selectedProjectId;
-          loadProjectPhotos(selectedProjectId);
-        }
+        if (select) select.value = projectId;
+
+        await loadProjectPhotos(projectId);
       } else {
-        alert(data.messaggio || "Errore durante il caricamento dell'immagine.");
+        alert(data.messaggio || "Errore durante il caricamento.");
       }
-    } catch (error) {
+    } catch {
       alert("Errore di connessione al server.");
     }
+  });
+}
+
+function initUploadSelect() {
+  const select = document.getElementById("upload-cantiere");
+  if (!select) return;
+
+  select.addEventListener("change", () => {
+    loadProjectPhotos(select.value);
   });
 }
 
@@ -323,12 +297,7 @@ async function loadRichiesteDashboard() {
     const data = await response.json();
 
     if (!data.ok) {
-      container.innerHTML = `
-        <div class="dash-card">
-          <h3>Errore caricamento richieste</h3>
-          <p>${escapeHtml(data.messaggio || "Impossibile recuperare le richieste.")}</p>
-        </div>
-      `;
+      container.innerHTML = errorCard(data.messaggio || "Impossibile recuperare le richieste.");
       return;
     }
 
@@ -344,134 +313,97 @@ async function loadRichiesteDashboard() {
       return;
     }
 
-    container.innerHTML = richieste.map((item) => `
+    container.innerHTML = richieste.map((r) => `
       <div class="dash-card">
-        <h3>${escapeHtml(item.nome)}</h3>
-        <p><strong>Email:</strong> ${escapeHtml(item.email || "-")}</p>
-        <p><strong>Telefono:</strong> ${escapeHtml(item.telefono || "-")}</p>
-        <p><strong>Comune:</strong> ${escapeHtml(item.comune || "-")}</p>
-        <p><strong>Tipologia:</strong> ${escapeHtml(item.tipologia_lavoro || "-")}</p>
-        <p><strong>Urgenza:</strong> ${escapeHtml(item.urgenza || "-")}</p>
-        <p><strong>Descrizione:</strong> ${escapeHtml(item.descrizione || "-")}</p>
-        <p><strong>Budget:</strong> ${escapeHtml(item.budget || "-")}</p>
-        <p><strong>Stato:</strong> ${escapeHtml(item.stato || "-")}</p>
-        <p><strong>Data:</strong> ${escapeHtml(item.created_at || "-")}</p>
+        <h3>${escapeHtml(r.nome)}</h3>
+        <p><strong>Email:</strong> ${escapeHtml(r.email || "-")}</p>
+        <p><strong>Telefono:</strong> ${escapeHtml(r.telefono || "-")}</p>
+        <p><strong>Comune:</strong> ${escapeHtml(r.comune || "-")}</p>
+        <p><strong>Tipologia:</strong> ${escapeHtml(r.tipologia_lavoro || "-")}</p>
+        <p><strong>Urgenza:</strong> ${escapeHtml(r.urgenza || "-")}</p>
+        <p><strong>Budget:</strong> ${escapeHtml(r.budget || "-")}</p>
+        <p><strong>Stato:</strong> ${escapeHtml(r.stato || "-")}</p>
+        <p><strong>Data:</strong> ${escapeHtml(r.created_at || "-")}</p>
+        <p><strong>Descrizione:</strong> ${escapeHtml(r.descrizione || "-")}</p>
       </div>
     `).join("");
-  } catch (error) {
-    container.innerHTML = `
-      <div class="dash-card">
-        <h3>Errore server</h3>
-        <p>Impossibile caricare le richieste dal backend.</p>
-      </div>
-    `;
+  } catch {
+    container.innerHTML = errorCard("Impossibile caricare le richieste dal backend.");
   }
 }
 
 async function loadProjectsDashboard() {
-  const listContainer = document.getElementById("lista-cantieri-dashboard");
-  const uploadSelect = document.getElementById("upload-cantiere");
+  const list = document.getElementById("lista-cantieri-dashboard");
+  const select = document.getElementById("upload-cantiere");
 
-  if (!listContainer && !uploadSelect) return;
+  if (!list && !select) return;
 
   try {
     const response = await fetch("/api/projects");
     const data = await response.json();
 
     if (!data.ok) {
-      if (listContainer) {
-        listContainer.innerHTML = `
-          <div class="dash-card">
-            <h3>Errore caricamento</h3>
-            <p>${escapeHtml(data.messaggio || "Impossibile caricare i cantieri.")}</p>
-          </div>
-        `;
-      }
+      if (list) list.innerHTML = errorCard(data.messaggio || "Impossibile caricare i cantieri.");
       return;
     }
 
     const projects = data.projects || [];
 
-    if (uploadSelect) {
-      uploadSelect.innerHTML = `<option value="">Seleziona</option>`;
+    if (select) {
+      const currentValue = select.value;
+      select.innerHTML = `<option value="">Seleziona</option>`;
+
       projects.forEach((project) => {
         const option = document.createElement("option");
         option.value = project.id;
         option.textContent = project.titolo;
-        uploadSelect.appendChild(option);
+        select.appendChild(option);
       });
+
+      if (currentValue) select.value = currentValue;
     }
 
-    if (listContainer) {
-      if (!projects.length) {
-        listContainer.innerHTML = `
-          <div class="dash-card">
-            <h3>Nessun cantiere presente</h3>
-            <p>Crea il primo cantiere dal modulo qui sopra.</p>
-          </div>
-        `;
-      } else {
-        listContainer.innerHTML = projects.map((project) => `
-          <div class="dash-card">
-            <h3>${escapeHtml(project.titolo)}</h3>
-            <p><strong>Categoria:</strong> ${escapeHtml(project.categoria || "-")}</p>
-            <p><strong>Luogo:</strong> ${escapeHtml(project.luogo || "-")}</p>
-            <p><strong>Descrizione:</strong> ${escapeHtml(project.descrizione_breve || "-")}</p>
-            <p><strong>Stato:</strong> ${escapeHtml(project.stato || "-")}</p>
-            <p><strong>Visibile sul sito:</strong> ${project.visibile_pubblico ? "Sì" : "No"}</p>
+    if (!list) return;
 
-            <div class="cantiere-actions">
-              <button class="btn btn-primary small-btn" type="button" onclick="editProject(${project.id})">
-                Modifica
-              </button>
-              <button class="btn btn-secondary small-btn" type="button" onclick="toggleProjectPublic(${project.id})">
-                ${project.visibile_pubblico ? "Nascondi" : "Pubblica"}
-              </button>
-              <button class="btn small-btn" type="button" onclick="deleteProject(${project.id})">
-                Elimina
-              </button>
-            </div>
-          </div>
-        `).join("");
-      }
-    }
-  } catch (error) {
-    if (listContainer) {
-      listContainer.innerHTML = `
+    if (!projects.length) {
+      list.innerHTML = `
         <div class="dash-card">
-          <h3>Errore server</h3>
-          <p>Impossibile caricare i cantieri dal backend.</p>
+          <h3>Nessun cantiere presente</h3>
+          <p>Crea il primo cantiere dal modulo qui sopra.</p>
         </div>
       `;
+      return;
     }
+
+    list.innerHTML = projects.map((p) => `
+      <div class="dash-card">
+        <h3>${escapeHtml(p.titolo)}</h3>
+        <p><strong>Categoria:</strong> ${escapeHtml(p.categoria || "-")}</p>
+        <p><strong>Luogo:</strong> ${escapeHtml(p.luogo || "-")}</p>
+        <p><strong>Descrizione:</strong> ${escapeHtml(p.descrizione_breve || "-")}</p>
+        <p><strong>Stato:</strong> ${escapeHtml(p.stato || "-")}</p>
+        <p><strong>Visibile sul sito:</strong> ${p.visibile_pubblico ? "Sì" : "No"}</p>
+
+        <div class="cantiere-actions">
+          <button class="btn btn-primary small-btn" type="button" onclick="editProject(${p.id})">
+            Modifica
+          </button>
+          <button class="btn btn-secondary small-btn" type="button" onclick="toggleProjectPublic(${p.id})">
+            ${p.visibile_pubblico ? "Nascondi" : "Pubblica"}
+          </button>
+          <button class="btn small-btn" type="button" onclick="deleteProject(${p.id})">
+            Elimina
+          </button>
+        </div>
+      </div>
+    `).join("");
+  } catch {
+    if (list) list.innerHTML = errorCard("Impossibile caricare i cantieri dal backend.");
   }
 }
 
-function setMessage(element, message, isSuccess) {
-  if (!element) {
-    if (!isSuccess) {
-      alert(message);
-    }
-    return;
-  }
-
-  element.textContent = message;
-  element.style.color = isSuccess ? "#86efac" : "#fda4af";
-}
-
-function escapeHtml(value) {
-  return String(value)
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&#039;");
-}
 async function editProject(projectId) {
   const messageBox = document.getElementById("project-message");
-  const hiddenId = document.getElementById("project-id");
-  const submitBtn = document.getElementById("project-submit-btn");
-  const cancelBtn = document.getElementById("project-cancel-btn");
 
   try {
     const response = await fetch(`/api/projects/${projectId}`);
@@ -484,18 +416,21 @@ async function editProject(projectId) {
 
     const project = data.project;
 
+    document.getElementById("project-id").value = project.id;
     document.getElementById("project-titolo").value = project.titolo || "";
     document.getElementById("project-categoria").value = project.categoria || "";
     document.getElementById("project-luogo").value = project.luogo || "";
     document.getElementById("project-descrizione").value = project.descrizione_breve || "";
 
-    if (hiddenId) hiddenId.value = project.id;
+    const submitBtn = document.getElementById("project-submit-btn");
+    const cancelBtn = document.getElementById("project-cancel-btn");
+
     if (submitBtn) submitBtn.textContent = "Salva modifiche";
     if (cancelBtn) cancelBtn.style.display = "inline-flex";
 
     setMessage(messageBox, "Modalità modifica attiva.", true);
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  } catch (error) {
+    document.getElementById("projectForm")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  } catch {
     setMessage(messageBox, "Errore di connessione al server.", false);
   }
 }
@@ -513,14 +448,13 @@ async function toggleProjectPublic(projectId) {
     } else {
       alert(data.messaggio || "Errore durante l'aggiornamento della visibilità.");
     }
-  } catch (error) {
+  } catch {
     alert("Errore di connessione al server.");
   }
 }
 
 async function deleteProject(projectId) {
-  const conferma = confirm("Vuoi davvero eliminare questo cantiere?");
-  if (!conferma) return;
+  if (!confirm("Vuoi davvero eliminare questo cantiere?")) return;
 
   try {
     const response = await fetch(`/api/projects/${projectId}/delete`, {
@@ -531,22 +465,16 @@ async function deleteProject(projectId) {
 
     if (data.ok) {
       await loadProjectsDashboard();
+      const select = document.getElementById("upload-cantiere");
+      if (select) select.value = "";
+      await loadProjectPhotos("");
     } else {
       alert(data.messaggio || "Errore durante l'eliminazione del cantiere.");
     }
-  } catch (error) {
+  } catch {
     alert("Errore di connessione al server.");
   }
 }
-document.addEventListener("DOMContentLoaded", () => {
-  const uploadSelect = document.getElementById("upload-cantiere");
-  if (uploadSelect) {
-    uploadSelect.addEventListener("change", () => {
-      const projectId = uploadSelect.value;
-      loadProjectPhotos(projectId);
-    });
-  }
-});
 
 async function loadProjectPhotos(projectId) {
   const container = document.getElementById("lista-foto-cantiere");
@@ -567,12 +495,7 @@ async function loadProjectPhotos(projectId) {
     const data = await response.json();
 
     if (!data.ok) {
-      container.innerHTML = `
-        <div class="dash-card">
-          <h3>Errore caricamento immagini</h3>
-          <p>${escapeHtml(data.messaggio || "Impossibile caricare le immagini.")}</p>
-        </div>
-      `;
+      container.innerHTML = errorCard(data.messaggio || "Impossibile caricare le immagini.");
       return;
     }
 
@@ -591,7 +514,7 @@ async function loadProjectPhotos(projectId) {
     container.innerHTML = photos.map((photo) => `
       <div class="dash-card">
         <div style="display:grid; gap:14px;">
-          <div style="border-radius:16px; overflow:hidden; border:1px solid rgba(255,255,255,0.08);">
+          <div style="border-radius:16px; overflow:hidden; border:1px solid rgba(111,170,220,0.14);">
             <img
               src="/static/${escapeHtml(photo.file_path)}"
               alt="Foto cantiere"
@@ -612,19 +535,13 @@ async function loadProjectPhotos(projectId) {
         </div>
       </div>
     `).join("");
-  } catch (error) {
-    container.innerHTML = `
-      <div class="dash-card">
-        <h3>Errore server</h3>
-        <p>Impossibile caricare le immagini del cantiere.</p>
-      </div>
-    `;
+  } catch {
+    container.innerHTML = errorCard("Impossibile caricare le immagini del cantiere.");
   }
 }
 
 async function deletePhoto(photoId, projectId) {
-  const conferma = confirm("Vuoi davvero eliminare questa immagine?");
-  if (!conferma) return;
+  if (!confirm("Vuoi davvero eliminare questa immagine?")) return;
 
   try {
     const response = await fetch(`/api/photos/${photoId}/delete`, {
@@ -638,7 +555,35 @@ async function deletePhoto(photoId, projectId) {
     } else {
       alert(data.messaggio || "Errore durante l'eliminazione della foto.");
     }
-  } catch (error) {
+  } catch {
     alert("Errore di connessione al server.");
   }
+}
+
+function setMessage(element, message, isSuccess) {
+  if (!element) {
+    if (message && !isSuccess) alert(message);
+    return;
+  }
+
+  element.textContent = message || "";
+  element.style.color = isSuccess ? "#22c55e" : "#ef5f7f";
+}
+
+function errorCard(message) {
+  return `
+    <div class="dash-card">
+      <h3>Errore</h3>
+      <p>${escapeHtml(message)}</p>
+    </div>
+  `;
+}
+
+function escapeHtml(value) {
+  return String(value ?? "")
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&#039;");
 }
