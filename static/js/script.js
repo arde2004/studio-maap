@@ -10,6 +10,9 @@ document.addEventListener("DOMContentLoaded", () => {
   initUploadForm();
   initUploadSelect();
 
+  initSiteSettingsForm();
+  loadSiteSettings();
+
   loadRichiesteDashboard();
   loadProjectsDashboard();
 });
@@ -586,4 +589,69 @@ function escapeHtml(value) {
     .replaceAll(">", "&gt;")
     .replaceAll('"', "&quot;")
     .replaceAll("'", "&#039;");
+}
+
+function initSiteSettingsForm() {
+  const form = document.getElementById("siteSettingsForm");
+  if (!form) return;
+
+  const messageBox = document.getElementById("settings-message");
+  const reloadBtn = document.getElementById("reload-settings-btn");
+
+  form.addEventListener("submit", async (event) => {
+    event.preventDefault();
+
+    setMessage(messageBox, "Salvataggio contenuti in corso...", true);
+
+    try {
+      const response = await fetch("/api/settings", {
+        method: "POST",
+        body: new FormData(form)
+      });
+
+      const data = await response.json();
+
+      if (data.ok) {
+        setMessage(messageBox, data.messaggio || "Contenuti salvati correttamente.", true);
+      } else {
+        setMessage(messageBox, data.messaggio || "Errore durante il salvataggio.", false);
+      }
+    } catch {
+      setMessage(messageBox, "Errore di connessione al server.", false);
+    }
+  });
+
+  if (reloadBtn) {
+    reloadBtn.addEventListener("click", () => {
+      loadSiteSettings();
+    });
+  }
+}
+
+async function loadSiteSettings() {
+  const form = document.getElementById("siteSettingsForm");
+  if (!form) return;
+
+  const messageBox = document.getElementById("settings-message");
+
+  try {
+    const response = await fetch("/api/settings");
+    const data = await response.json();
+
+    if (!data.ok) {
+      setMessage(messageBox, data.messaggio || "Errore caricamento contenuti.", false);
+      return;
+    }
+
+    const settings = data.settings || {};
+
+    Object.keys(settings).forEach((key) => {
+      const input = form.querySelector(`[name="${key}"]`);
+      if (input) input.value = settings[key] || "";
+    });
+
+    setMessage(messageBox, "Contenuti caricati.", true);
+  } catch {
+    setMessage(messageBox, "Errore di connessione al server.", false);
+  }
 }
