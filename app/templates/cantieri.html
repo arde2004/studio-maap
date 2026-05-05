@@ -3,13 +3,16 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>Cantieri | Studio Tecnico MAAP</title>
   <meta
     name="description"
     content="Scopri i cantieri seguiti dallo Studio Tecnico MAAP, con interventi, immagini e dettagli tecnici."
   />
+
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 </head>
+
 <body>
   <div class="grid-overlay"></div>
   <div class="orb a"></div>
@@ -47,9 +50,9 @@
           <span class="page-badge">CANTIERI • PROGETTI • INTERVENTI REALI</span>
           <h1>I cantieri dello <span class="shine">Studio Tecnico MAAP</span></h1>
           <p>
-            In questa sezione trovi i principali lavori pubblicati dallo studio, con descrizione,
-            località, immagini e stato dell’intervento. Una selezione dei progetti seguiti
-            dal team nelle diverse aree operative.
+            Una selezione dei lavori pubblicati dallo studio: interventi tecnici,
+            ristrutturazioni, pratiche, direzione lavori e aggiornamenti fotografici
+            caricati direttamente dall’area riservata.
           </p>
         </div>
       </div>
@@ -62,8 +65,8 @@
             <h2>Progetti e lavori pubblicati</h2>
           </div>
           <p>
-            Filtra i cantieri per categoria e consulta gli interventi pubblicati,
-            con informazioni sintetiche e accesso alla scheda dettagliata.
+            Filtra i cantieri per categoria e apri la scheda dettagliata per vedere immagini,
+            descrizione e informazioni principali dell’intervento.
           </p>
         </div>
 
@@ -78,7 +81,10 @@
         {% if projects %}
           <div class="cantieri-grid">
             {% for project in projects %}
-              <article class="cantiere-card reveal" data-category="{{ project.categoria|lower if project.categoria else '' }}">
+              <article
+                class="cantiere-card reveal"
+                data-category="{{ project.categoria|lower if project.categoria else '' }}"
+              >
                 <div class="cantiere-image">
                   {% if project.cover_path %}
                     <img
@@ -86,6 +92,11 @@
                       alt="{{ project.titolo }}"
                       class="cantiere-cover-image"
                     />
+                  {% else %}
+                    <div class="cantiere-placeholder">
+                      <div class="cantiere-placeholder-icon">MA</div>
+                      <span>Immagine in aggiornamento</span>
+                    </div>
                   {% endif %}
 
                   <div class="cantiere-image-overlay"></div>
@@ -93,6 +104,12 @@
                   <div class="cantiere-status">
                     {{ project.stato|capitalize if project.stato else 'Pubblicato' }}
                   </div>
+
+                  {% if project.foto_prima and project.foto_dopo %}
+                    <div class="cantiere-badge">PRIMA / DOPO</div>
+                  {% elif project.numero_foto and project.numero_foto > 0 %}
+                    <div class="cantiere-badge">{{ project.numero_foto }} FOTO</div>
+                  {% endif %}
                 </div>
 
                 <div class="cantiere-body">
@@ -112,8 +129,11 @@
                   </div>
 
                   <div class="cantiere-actions">
-                    <a href="{{ url_for('main.dettaglio_cantiere', slug=project.slug) }}" class="btn btn-primary small-btn">
-                      Vedi dettagli
+                    <a
+                      href="{{ url_for('main.dettaglio_cantiere', slug=project.slug) }}"
+                      class="btn btn-primary small-btn"
+                    >
+                      Scopri il progetto →
                     </a>
                   </div>
                 </div>
