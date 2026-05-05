@@ -3,10 +3,13 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <title>{{ project.titolo }} | Studio Tecnico MAAP</title>
   <meta name="description" content="{{ project.descrizione_breve }}" />
+
   <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
 </head>
+
 <body>
   <div class="grid-overlay"></div>
   <div class="orb a"></div>
@@ -37,13 +40,17 @@
   </header>
 
   <main>
+
+    <!-- HERO -->
     <section class="page-hero">
       <div class="container">
         <div class="page-hero-box reveal visible">
           <span class="page-badge">
             {{ project.categoria if project.categoria else 'CANTIERE' }}
           </span>
+
           <h1>{{ project.titolo }}</h1>
+
           <p>
             {{ project.descrizione_completa if project.descrizione_completa else project.descrizione_breve }}
           </p>
@@ -51,17 +58,9 @@
       </div>
     </section>
 
+    <!-- INFO -->
     <section>
       <div class="container">
-        <div class="section-head">
-          <div>
-            <h2>Dettagli intervento</h2>
-          </div>
-          <p>
-            Informazioni principali sul progetto pubblicato, con dati essenziali e contenuti fotografici.
-          </p>
-        </div>
-
         <div class="cards-3">
           <article class="feature-card">
             <div class="icon-box">📍</div>
@@ -84,25 +83,47 @@
       </div>
     </section>
 
+    <!-- PRIMA / DOPO (SUPER FIGO) -->
+    {% if project.foto_prima and project.foto_dopo %}
     <section>
       <div class="container">
         <div class="section-head">
-          <div>
-            <h2>Galleria del cantiere</h2>
+          <h2>Confronto intervento</h2>
+          <p>Situazione prima e dopo l’intervento realizzato.</p>
+        </div>
+
+        <div class="before-after">
+          <div class="before">
+            <span>PRIMA</span>
+            <img src="{{ url_for('static', filename=project.foto_prima) }}">
           </div>
-          <p>
-            Una raccolta delle immagini caricate dall’area tecnica per documentare il lavoro svolto.
-          </p>
+
+          <div class="after">
+            <span>DOPO</span>
+            <img src="{{ url_for('static', filename=project.foto_dopo) }}">
+          </div>
+        </div>
+      </div>
+    </section>
+    {% endif %}
+
+    <!-- GALLERIA -->
+    <section>
+      <div class="container">
+        <div class="section-head">
+          <h2>Galleria immagini</h2>
+          <p>Documentazione fotografica del cantiere.</p>
         </div>
 
         {% if project.photos %}
           <div class="cantieri-grid">
+
             {% for photo in project.photos %}
               <article class="cantiere-card reveal">
+
                 <div class="cantiere-image">
                   <img
                     src="{{ url_for('static', filename=photo.file_path) }}"
-                    alt="{{ project.titolo }}"
                     class="cantiere-cover-image"
                   />
 
@@ -115,39 +136,40 @@
 
                 <div class="cantiere-body">
                   <span class="cantiere-type">{{ photo.tipo|capitalize }}</span>
-                  <h3>{{ project.titolo }}</h3>
                   <p>{{ photo.caption if photo.caption else 'Immagine del cantiere.' }}</p>
                 </div>
+
               </article>
             {% endfor %}
+
           </div>
         {% else %}
           <div class="form-panel">
-            <h3 style="margin-bottom: 10px;">Nessuna immagine disponibile</h3>
-            <p class="card-text">
-              Le immagini di questo cantiere verranno caricate e pubblicate dall’area tecnica riservata.
-            </p>
+            <h3>Nessuna immagine disponibile</h3>
+            <p>Le immagini verranno caricate dall’area tecnica.</p>
           </div>
         {% endif %}
       </div>
     </section>
 
+    <!-- CTA -->
     <section>
       <div class="container">
         <div class="cta">
           <div>
-            <h3>Vuoi richiedere un intervento simile?</h3>
+            <h3>Vuoi un intervento simile?</h3>
             <p>
-              Contatta lo studio e invia una richiesta dettagliata tramite il modulo preventivi
-              per ricevere una valutazione tecnica più precisa.
+              Contattaci e richiedi una consulenza tecnica personalizzata.
             </p>
           </div>
+
           <a href="{{ url_for('main.preventivi') }}" class="btn btn-primary">
-            Richiedi un preventivo
+            Richiedi preventivo
           </a>
         </div>
       </div>
     </section>
+
   </main>
 
   <footer>
@@ -155,10 +177,7 @@
       <div class="footer-grid">
         <div class="footer-box">
           <h4>Studio Tecnico MAAP</h4>
-          <p>
-            Progettazione, pratiche edilizie, cantieri e consulenza tecnica per privati,
-            imprese e professionisti.
-          </p>
+          <p>Progettazione, pratiche edilizie e gestione cantieri.</p>
         </div>
 
         <div class="footer-box">
@@ -167,21 +186,19 @@
             <li>Via Esempio 25, Milano</li>
             <li>+39 02 1234 5678</li>
             <li>info@studiomaap.it</li>
-            <li>studiomaap@pec.it</li>
           </ul>
         </div>
 
         <div class="footer-box">
           <h4>Navigazione</h4>
           <ul>
-            <li><a href="{{ url_for('main.cantieri') }}">Torna ai cantieri</a></li>
-            <li><a href="{{ url_for('main.preventivi') }}">Preventivi</a></li>
+            <li><a href="{{ url_for('main.cantieri') }}">Cantieri</a></li>
             <li><a href="{{ url_for('main.home') }}">Home</a></li>
           </ul>
         </div>
       </div>
 
-      <div class="footer-bottom">© 2026 Studio Tecnico MAAP • Dettaglio cantiere</div>
+      <div class="footer-bottom">© 2026 Studio Tecnico MAAP</div>
     </div>
   </footer>
 
