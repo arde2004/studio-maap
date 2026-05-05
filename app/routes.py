@@ -5,19 +5,28 @@ main_bp = Blueprint("main", __name__)
 
 
 def build_project_card(project):
+    foto_cover = None
     foto_prima = None
     foto_dopo = None
     foto_avanzamento = None
 
+    # 🔥 PRIORITÀ 1: cover manuale (ordine = -100)
     for foto in project.photos:
-        if foto.tipo == "prima" and not foto_prima:
-            foto_prima = foto
-        elif foto.tipo == "dopo" and not foto_dopo:
-            foto_dopo = foto
-        elif foto.tipo == "avanzamento" and not foto_avanzamento:
-            foto_avanzamento = foto
+        if foto.ordine == -100:
+            foto_cover = foto
+            break
 
-    foto_cover = foto_dopo or foto_prima or foto_avanzamento
+    # 🔥 Se NON c'è cover manuale, fallback automatico
+    if not foto_cover:
+        for foto in project.photos:
+            if foto.tipo == "prima" and not foto_prima:
+                foto_prima = foto
+            elif foto.tipo == "dopo" and not foto_dopo:
+                foto_dopo = foto
+            elif foto.tipo == "avanzamento" and not foto_avanzamento:
+                foto_avanzamento = foto
+
+        foto_cover = foto_dopo or foto_prima or foto_avanzamento
 
     return {
         "id": project.id,
@@ -30,17 +39,23 @@ def build_project_card(project):
         "stato": project.stato or "",
         "visibile_pubblico": project.visibile_pubblico,
         "in_evidenza": project.in_evidenza,
+
+        # 👇 QUI LA COVER VERA
         "cover_path": foto_cover.file_path if foto_cover else None,
+
         "foto_prima": foto_prima.file_path if foto_prima else None,
         "foto_dopo": foto_dopo.file_path if foto_dopo else None,
         "foto_avanzamento": foto_avanzamento.file_path if foto_avanzamento else None,
+
         "numero_foto": len(project.photos),
+
         "photos": [
             {
                 "id": foto.id,
                 "file_path": foto.file_path,
                 "caption": foto.caption or "",
-                "tipo": foto.tipo or "avanzamento"
+                "tipo": foto.tipo or "avanzamento",
+                "ordine": foto.ordine
             }
             for foto in project.photos
         ]
