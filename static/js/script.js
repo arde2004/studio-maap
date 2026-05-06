@@ -519,7 +519,7 @@ async function loadProjectPhotos(projectId) {
         <div style="display:grid; gap:14px;">
           <div style="border-radius:16px; overflow:hidden; border:1px solid rgba(111,170,220,0.14);">
             <img
-              src="/static/${escapeHtml(photo.file_path)}"
+              src="${escapeHtml(photo.file_path)}"
               alt="Foto cantiere"
               style="width:100%; height:220px; object-fit:cover; display:block;"
             />
