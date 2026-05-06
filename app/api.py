@@ -4,10 +4,21 @@ import uuid
 from flask import Blueprint, request, jsonify, current_app
 from werkzeug.utils import secure_filename
 
+import cloudinary
+import cloudinary.uploader
+
+
 from app import db
 from app.models import QuoteRequest, QuoteAttachment, Project, ProjectPhoto, SiteSetting
 
 api_bp = Blueprint("api", __name__)
+
+cloudinary.config(
+    cloud_name=os.getenv("CLOUDINARY_CLOUD_NAME"),
+    api_key=os.getenv("CLOUDINARY_API_KEY"),
+    api_secret=os.getenv("CLOUDINARY_API_SECRET"),
+    secure=True
+)
 
 ALLOWED_EXTENSIONS = {
     "png", "jpg", "jpeg", "webp", "pdf", "doc", "docx"
@@ -248,19 +259,25 @@ def api_upload_photo():
             }), 400
 
         original_name = secure_filename(file.filename)
-        ext = original_name.rsplit(".", 1)[1].lower()
-        saved_name = f"{uuid.uuid4().hex}.{ext}"
 
-        upload_dir = os.path.join(current_app.static_folder, "uploads", "cantieri")
-        os.makedirs(upload_dir, exist_ok=True)
+        upload_result = cloudinary.uploader.upload(
+            file,
+            folder="studio-maap/cantieri",
+            resource_type="image"
+        )
 
-        full_path = os.path.join(upload_dir, saved_name)
-        file.save(full_path)
+        image_url = upload_result.get("secure_url")
+
+        if not image_url:
+            return jsonify({
+                "ok": False,
+                "messaggio": "Errore durante il caricamento su Cloudinary."
+            }), 500
 
         foto = ProjectPhoto(
             project_id=project.id,
-            file_name=saved_name,
-            file_path=f"uploads/cantieri/{saved_name}",
+            file_name=original_name,
+            file_path=image_url,
             caption=caption,
             tipo=tipo or "avanzamento",
             ordine=0
